@@ -5,6 +5,8 @@ import com.samsungds.codereview.teamd.repo.Repository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.io.IOException;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class ModTest {
@@ -12,7 +14,7 @@ public class ModTest {
     private ModCommand mod;
 
     @BeforeEach
-    void setUp(){
+    void setUp() throws IOException {
         irepo = new Repository();
         AddCommand add = new AddCommand();
         add.setRepository(irepo);

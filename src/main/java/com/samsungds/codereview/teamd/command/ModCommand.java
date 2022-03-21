@@ -1,30 +1,30 @@
 package com.samsungds.codereview.teamd.command;
 
 import com.samsungds.codereview.teamd.constant.Constants;
-import com.samsungds.codereview.teamd.print.FilePrint;
+import com.samsungds.codereview.teamd.print.Print;
 import com.samsungds.codereview.teamd.repo.IRepository;
 import com.samsungds.codereview.teamd.vo.Employee;
 
 import java.util.ArrayList;
-import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class ModCommand implements ICommand {
     private IRepository irepo;
-    private FilePrint filePrint;
+    private Print filePrint;
 
     @Override
     public Boolean execute(String inputStr) {
         ArrayList<String> itemList = inputStringToArrayList(inputStr);
 
-        if(!(itemList.get(Constants.INPUT_STR_COMMAND_POS).equals(Constants.COMMAND_MODIFY))) return false;
+        if(!(itemList.get(Constants.INPUT_STR_COMMAND_POS).equals(Constants.COMMAND_MODIFY)))
+            throw new IllegalArgumentException();
 
         return true;
     }
 
     @Override
-    public void setFilePrint(FilePrint filePrint){
+    public void setFilePrint(Print filePrint){
         this.filePrint = filePrint;
     }
 
