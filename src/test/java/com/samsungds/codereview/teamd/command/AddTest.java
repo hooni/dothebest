@@ -1,5 +1,6 @@
 package com.samsungds.codereview.teamd.command;
 
+import com.samsungds.codereview.teamd.repo.IRepository;
 import com.samsungds.codereview.teamd.repo.Repository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -9,16 +10,13 @@ import static org.junit.jupiter.api.Assertions.*;
 public class AddTest {
     private AddCommand add;
     private String inputStr1;
+    private IRepository irepo;
 
     @BeforeEach
     void setUp() {
-        add = new AddCommand(new Repository());
+        add = new AddCommand();
+        irepo = new Repository();
         inputStr1 = "ADD, , , ,18050301,KYUMOK KIM,CL2,010-9777-6055,19980906,PRO";
-    }
-
-    @Test
-    void constructorTest(){
-        assertThrows(NullPointerException.class, () -> {add = new AddCommand(null);} );
     }
 
     @Test

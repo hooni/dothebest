@@ -1,6 +1,7 @@
 package com.samsungds.codereview.teamd.command;
 
 import com.samsungds.codereview.teamd.constant.Constants;
+import com.samsungds.codereview.teamd.print.FilePrint;
 import com.samsungds.codereview.teamd.repo.IRepository;
 import com.samsungds.codereview.teamd.vo.Employee;
 
@@ -11,10 +12,7 @@ import java.util.stream.Stream;
 
 public class ModCommand implements ICommand {
     private IRepository irepo;
-
-    public ModCommand(IRepository irepo){
-        setRepository(irepo);
-    }
+    private FilePrint filePrint;
 
     @Override
     public Boolean execute(String inputStr) {
@@ -25,7 +23,13 @@ public class ModCommand implements ICommand {
         return true;
     }
 
-    private void setRepository(IRepository irepo){
+    @Override
+    public void setFilePrinter(FilePrint filePrint){
+        this.filePrint = filePrint;
+    }
+
+    @Override
+    public void setRepository(IRepository irepo){
         if(irepo == null) throw new NullPointerException("Error : Repository Link");
         this.irepo = irepo;
     }
