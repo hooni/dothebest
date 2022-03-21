@@ -1,38 +1,58 @@
 package com.samsungds.codereview.teamd.command;
 
+import com.samsungds.codereview.teamd.print.Print;
 import com.samsungds.codereview.teamd.repo.IRepository;
 import com.samsungds.codereview.teamd.repo.Repository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.junit.jupiter.MockitoExtension;
+
+import java.io.IOException;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
+@ExtendWith(MockitoExtension.class)
 public class AddTest {
-    private AddCommand add;
     private String inputStr1;
-    private IRepository irepo;
+
+    @Mock
+    Print filePrint;
+
+    @InjectMocks
+    AddCommand add;
+
 
     @BeforeEach
-    void setUp() {
+    void setUp() throws IOException {
         add = new AddCommand();
-        irepo = new Repository();
+        IRepository irepo = new Repository();
         inputStr1 = "ADD, , , ,18050301,KYUMOK KIM,CL2,010-9777-6055,19980906,PRO";
+
+        add.setFilePrint(filePrint);
+        add.setRepository(irepo);
+
+        Mockito.lenient().doNothing().when(filePrint).print(anyString(), anyCollection(), anyBoolean());
     }
 
     @Test
-    void wrongInputData(){
-        String wrongInput = "SCH,-p,-d, ,birthday,04";
+    void wrongInputData() {
+        String wrongInput = "SCH,-p,-d, ,birthday,19980906";
 
-        assertFalse(add.execute(wrongInput));
+        assertThrows(Exception.class,() -> add.execute(wrongInput), "");
     }
 
     @Test
-    void addExecuteTest(){
+    void addExecuteTest() throws IOException {
         assertTrue(add.execute(inputStr1));
     }
 
     @Test
-    void sameInputStringTest(){
+    void sameInputStringTest() throws IOException {
         String inputStr2 = "ADD, , , ,18050301,KYUMOK KIM,CL2,010-9777-6055,19980906,PRO";
 
         assertTrue(add.execute(inputStr1));
@@ -40,7 +60,7 @@ public class AddTest {
     }
 
     @Test
-    void haveSameEmployeeNumTest(){
+    void haveSameEmployeeNumTest() throws IOException {
         String inputStr2 = "ADD, , , ,18050301,DAVID KIM,CL3,010-1234-5678,19880516,EXP";
 
         assertTrue(add.execute(inputStr1));
