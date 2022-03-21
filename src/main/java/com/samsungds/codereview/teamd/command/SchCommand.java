@@ -1,6 +1,7 @@
 package com.samsungds.codereview.teamd.command;
 
 import com.samsungds.codereview.teamd.constant.Constants;
+import com.samsungds.codereview.teamd.print.FilePrint;
 import com.samsungds.codereview.teamd.repo.IRepository;
 import com.samsungds.codereview.teamd.vo.Employee;
 
@@ -11,10 +12,7 @@ import java.util.stream.Stream;
 
 public class SchCommand implements ICommand{
     private IRepository irepo;
-
-    public SchCommand(IRepository irepo){
-        setRepository(irepo);
-    }
+    private FilePrint filePrint;
 
     @Override
     public Boolean execute(String inputStr) {
@@ -24,12 +22,19 @@ public class SchCommand implements ICommand{
 
         Map<Integer, Employee> map = irepo.search(itemList.get(Constants.INPUT_STR_KEY1), itemList.get(Constants.INPUT_STR_VALUE1));
 
+        //if(itemList.get(Constants.INPUT_STR_OPTION1_POS))
 
 
         return null;
     }
 
-    private void setRepository(IRepository irepo){
+    @Override
+    public void setFilePrinter(FilePrint filePrint){
+        this.filePrint = filePrint;
+    }
+
+    @Override
+    public void setRepository(IRepository irepo){
         if(irepo == null) throw new NullPointerException("Error : Repository Link");
         this.irepo = irepo;
     }

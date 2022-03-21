@@ -1,6 +1,7 @@
 package com.samsungds.codereview.teamd.command;
 
 import com.samsungds.codereview.teamd.constant.Constants;
+import com.samsungds.codereview.teamd.print.FilePrint;
 import com.samsungds.codereview.teamd.repo.IRepository;
 import com.samsungds.codereview.teamd.vo.Employee;
 
@@ -10,13 +11,12 @@ import java.util.stream.Stream;
 
 public class AddCommand implements ICommand {
     private IRepository irepo;
-
-    public AddCommand(IRepository irepo){
-        setRepository(irepo);
-    }
+    private FilePrint filePrint;
 
     @Override
     public Boolean execute(String inputStr){
+        if(irepo == null) throw new NullPointerException("Error : Repository Link");
+
         ArrayList<String> itemList = inputStringToArrayList(inputStr);
 
         if(!(itemList.get(Constants.INPUT_STR_COMMAND_POS).equals(Constants.COMMAND_ADD))) return false;
@@ -31,7 +31,13 @@ public class AddCommand implements ICommand {
         return irepo.add(emp) != 0;
     }
 
-    private void setRepository(IRepository irepo){
+    @Override
+    public void setFilePrinter(FilePrint filePrint){
+        this.filePrint = filePrint;
+    }
+
+    @Override
+    public void setRepository(IRepository irepo){
         if(irepo == null) throw new NullPointerException("Error : Repository Link");
         this.irepo = irepo;
     }
@@ -42,7 +48,7 @@ public class AddCommand implements ICommand {
         return inputStrList;
     }
 
-    private Employee empMaker(String empNum, String name, String cl, String phoneNum, String birtday, String certi){
+    private Employee empMaker(String empNum, String name, String cl, String phoneNum, String birtday, String certi) {
         return new Employee(empNum, name, cl, phoneNum, birtday, certi);
     }
 }

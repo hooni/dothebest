@@ -14,8 +14,10 @@ public class ModTest {
     @BeforeEach
     void setUp(){
         irepo = new Repository();
-        AddCommand add = new AddCommand(irepo);
-        mod = new ModCommand(irepo);
+        AddCommand add = new AddCommand();
+        add.setRepository(irepo);
+        mod = new ModCommand();
+        mod.setRepository(irepo);
 
         String addStr1 = "ADD, , , ,18050301,KYUMOK KIM,CL2,010-9777-6055,19980906,PRO";
         String addStr2 = "ADD, , , ,15123099,VXIHXOTH JHOP,CL3,010-3112-2609,19771211,ADV";
@@ -26,11 +28,6 @@ public class ModTest {
         add.execute(addStr2);
         add.execute(addStr3);
         add.execute(addStr4);
-    }
-
-    @Test
-    void constructorTest(){
-        assertThrows(NullPointerException.class, () -> {ModCommand mod = new ModCommand(null);} );
     }
 
     @Test
