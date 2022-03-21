@@ -84,7 +84,7 @@ public class SchCommand implements ICommand{
     }
 
     private void printResult(ArrayList<Employee> empList, Boolean isEnable) throws IOException {
-        filePrint.print(Constants.COMMAND_DEL, empList, isEnable);
+        filePrint.print(Constants.COMMAND_SEARCH, empList, isEnable);
     }
 
     private Boolean isPrintOptionEnable(String inputStr){
