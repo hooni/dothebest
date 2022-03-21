@@ -14,8 +14,10 @@ public class DelTest {
     @BeforeEach
     void setUp(){
         irepo = new Repository();
-        AddCommand add = new AddCommand(irepo);
-        del = new DelCommand(irepo);
+        AddCommand add = new AddCommand();
+        add.setRepository(irepo);
+        del = new DelCommand();
+        del.setRepository(irepo);
 
         String addStr1 = "ADD, , , ,18050301,KYUMOK KIM,CL2,010-9777-6055,19980906,PRO";
         String addStr2 = "ADD, , , ,15123099,VXIHXOTH JHOP,CL3,010-3112-2609,19771211,ADV";
@@ -29,11 +31,6 @@ public class DelTest {
     }
 
     @Test
-    void constructorTest(){
-        assertThrows(NullPointerException.class, () -> {DelCommand del = new DelCommand(null);} );
-    }
-
-    @Test
     void wrongInputData(){
         String wrongInput = "SCH,-p,-d, ,birthday,04";
 
@@ -43,10 +40,6 @@ public class DelTest {
     @Test
     void delExecuteByEmpNumTest(){
         String inputStr1 = "DEL, , , ,employeeNum,18050301";
-
-        // 키를 모르는데 키를 알아야함....??
-        // 키도 String이 아닌 Integer로 넘겨야 함....??
-        // Repository 확인 필요
         assertTrue(del.execute(inputStr1));
         assertTrue(del.execute(inputStr1));
     }
@@ -59,7 +52,6 @@ public class DelTest {
         assertTrue(del.execute(inputStr1));
     }
 
-//      Repository 부분 확인 후
     @Test
     void delExecuteByNameTest(){
         String inputStr1 = "DEL, , , ,name,KYUMOK KIM";
