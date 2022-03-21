@@ -177,4 +177,37 @@ class MemoryRepositoryTest {
 		assertEquals("HH LTUPF", result.get(2003113260).getName());
 		assertEquals("19791018", result.get(2003113260).getBirthday());
 	}
+	
+	@Test
+	void testDelSize() {
+		setupData();
+		
+		int size = repo.deleteCnt(Constants.EMPLOYEE_CAREER_LEVEL, "CL3");
+
+		assertEquals(4, size);
+
+	}
+	
+	@Test
+	void testModifySize() {
+		setupData();
+		
+		int size = repo.modifyCnt(Constants.EMPLOYEE_CAREER_LEVEL, "CL3", Constants.EMPLOYEE_CAREER_LEVEL, "CL4");
+		
+		assertEquals(4, size);
+	}
+	
+	@Test
+	void testSearchCnt() {
+		setupData();
+
+		int size = repo.searchCnt(Constants.EMPLOYEE_NAME, "TTETHU HBO");
+		assertEquals(1, size);
+
+		size = repo.searchCnt(Constants.EMPLOYEE_CAREER_LEVEL, "CL2");
+		assertEquals(2, size);
+
+		size = repo.searchCnt(Constants.EMPLOYEE_BIRTHDAY, "20090201");
+		assertEquals(1, size);
+	}
 }

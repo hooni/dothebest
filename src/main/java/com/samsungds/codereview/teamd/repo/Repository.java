@@ -38,4 +38,19 @@ public class Repository implements IRepository {
 		return repo.search(key, value, limit);
 	}
 
+	@Override
+	public int deleteCnt(String key, String value) {
+		return repo.deleteCnt(key, value);
+	}
+
+	@Override
+	public int modifyCnt(String targetKey, String targetValue, String chageKey, String changeValue) {
+		return repo.modifyCnt(targetKey, targetValue, chageKey, changeValue);
+	}
+
+	@Override
+	public int searchCnt(String key, String value) {
+		return repo.searchCnt(key, value);
+	}
+
 }
