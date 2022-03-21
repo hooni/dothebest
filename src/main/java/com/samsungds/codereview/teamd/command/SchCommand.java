@@ -8,6 +8,7 @@ import com.samsungds.codereview.teamd.vo.Employee;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Map;
+import java.util.TreeMap;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -31,11 +32,29 @@ public class SchCommand implements ICommand{
 
         ArrayList<Employee> empList = new ArrayList<>();
 
+        // 임시 Sorting (Treemap 구조로 변경)
+        Map<Integer, Employee> map1 = new TreeMap<>();
+
         if(map != null) {
             for (Integer key : map.keySet()) {
-                empList.add(map.get(key));
+                map1.put(key, map.get(key));
             }
         }
+
+        // 임시 Limit 설정
+        int cnt = 0;
+        for (Integer key : map1.keySet()) {
+            empList.add(map1.get(key));
+            cnt++;
+            if(cnt == 5) break;
+        }
+
+//        System.out.println("=============");
+//        System.out.println("Map Cnt : " + map.size());
+//        for(Employee emp: map.values()){
+//            System.out.println(emp.toInfoString());
+//        }
+//        System.out.println("=============");
 
         printResult(empList, isPrintOptionEnable(itemList.get(Constants.INPUT_STR_OPTION1_POS)));
 
@@ -77,10 +96,6 @@ public class SchCommand implements ICommand{
         ArrayList<String> inputStrList;
         inputStrList = Stream.of(inputStr.split(",")).collect(Collectors.toCollection(ArrayList<String>::new));
         return inputStrList;
-    }
-
-    private Employee empMaker(String empNum, String name, String cl, String phoneNum, String birtday, String certi){
-        return new Employee(empNum, name, cl, phoneNum, birtday, certi);
     }
 
     private void printResult(ArrayList<Employee> empList, Boolean isEnable) throws IOException {
