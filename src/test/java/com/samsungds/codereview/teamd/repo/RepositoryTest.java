@@ -125,14 +125,14 @@ class RepositoryTest {
 	@Test
 	void testDelImpl() {
 		IRepository repo = new Repository();
-		Integer empKey = repo.add(new Employee("59123456", "Kildong Hong", "CL3", "010-001-0001", "19880101", "PRO"));
-		assertEquals(2059123456, empKey);
-		repo.add(new Employee("00123456", "Minsu Kim", "CL2", "010-001-1001", "20000101", "PRO"));
-
+		List<Employee> list = readSample();
+		for (Employee emp : list) {
+			repo.add(emp);
+		}
+		
 		Map<Integer, Employee> result = repo.delete(Constants.EMPLOYEE_CAREER_LEVEL, "CL3");
 
-		assertEquals(1, result.keySet().size());
-		assertEquals(1, result.keySet().size());
+		assertEquals(4, result.keySet().size());
 
 	}
 
