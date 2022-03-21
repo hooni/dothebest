@@ -11,8 +11,10 @@ public interface IRepository {
 	Integer add(Employee emp);
 
 	Map<Integer, Employee> delete(String key, String value);
-
+	
 	Map<Integer, Employee> modify(String targetKey, String targetValue, String chageKey, String changeValue);
 	
 	Map<Integer, Employee> search(String key, String value);
+	
+	Map<Integer, Employee> search(String key, String value, int limit);
 }
