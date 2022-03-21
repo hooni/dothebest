@@ -16,12 +16,12 @@ public class Employee {
 	private String nameFirst;
 	private String nameLast;
 
-	private int phoneNumMid;
-	private int phoneNumLast;
+	private String phoneNumMid;
+	private String phoneNumLast;
 
-	private int birthdayYear;
-	private int birthdayMonth;
-	private int birthdayDay;
+	private String birthdayYear;
+	private String birthdayMonth;
+	private String birthdayDay;
 
 	public Employee(String employeeNum, String name, String cl, String phoneNum, String birthday, String certi) {
 		this.employeeNum = employeeNum;
@@ -58,8 +58,8 @@ public class Employee {
 	public void setPhoneNum(String phoneNum) {
 		this.phoneNum = phoneNum;
 		String[] phoneNumArray = phoneNum.split(Constants.SEPARATOR_PHONENUM);
-		this.phoneNumMid = Integer.parseInt(phoneNumArray[1]);
-		this.phoneNumLast = Integer.parseInt(phoneNumArray[2]);
+		this.phoneNumMid = phoneNumArray[1];
+		this.phoneNumLast =phoneNumArray[2];
 	}
 
 	public String getBirthday() {
@@ -68,9 +68,9 @@ public class Employee {
 
 	public void setBirthday(String birthday) {
 		this.birthday = birthday;
-		this.birthdayYear = Integer.parseInt(birthday.substring(0, 4));
-		this.birthdayMonth = Integer.parseInt(birthday.substring(4, 6));
-		this.birthdayDay = Integer.parseInt(birthday.substring(6));
+		this.birthdayYear = birthday.substring(0, 4);
+		this.birthdayMonth = birthday.substring(4, 6);
+		this.birthdayDay = birthday.substring(6);
 	}
 
 	public String getCerti() {
@@ -97,23 +97,23 @@ public class Employee {
 		return nameLast;
 	}
 
-	public int getPhoneNumMid() {
+	public String getPhoneNumMid() {
 		return phoneNumMid;
 	}
 
-	public int getPhoneNumLast() {
+	public String getPhoneNumLast() {
 		return phoneNumLast;
 	}
 
-	public int getBirthdayYear() {
+	public String getBirthdayYear() {
 		return birthdayYear;
 	}
 
-	public int getBirthdayMonth() {
+	public String getBirthdayMonth() {
 		return birthdayMonth;
 	}
 
-	public int getBirthdayDay() {
+	public String getBirthdayDay() {
 		return birthdayDay;
 	}
 
