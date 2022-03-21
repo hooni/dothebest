@@ -2,10 +2,12 @@ package com.samsungds.codereview.teamd.repo;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.security.KeyStore.Entry;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Set;
+import java.util.stream.Stream;
 
 import com.samsungds.codereview.teamd.constant.Constants;
 import com.samsungds.codereview.teamd.vo.Employee;
@@ -31,9 +33,10 @@ public class Repository implements IRepository {
 	@Override
 	public Map<Integer, Employee> delete(String key, String value) {
 		Map<Integer, Employee> result = new HashMap<>();
-
+		
 		Iterator<Integer> empNums = db.keySet().stream()
-				.filter(k -> getEmpValue(db.get(k), key).equalsIgnoreCase(value)).iterator();
+				.filter(k -> getEmpValue(db.get(k), key).equalsIgnoreCase(value)).sorted().iterator();
+		
 		while (empNums.hasNext()) {
 			Integer empNum = empNums.next();
 			Employee employee = db.remove(empNum);
@@ -49,7 +52,8 @@ public class Repository implements IRepository {
 		Map<Integer, Employee> result = new HashMap<>();
 
 		Iterator<Integer> empNums = db.keySet().stream()
-				.filter(k -> getEmpValue(db.get(k), targetKey).equalsIgnoreCase(targetValue)).iterator();
+				.filter(k -> getEmpValue(db.get(k), targetKey).equalsIgnoreCase(targetValue)).sorted().iterator();
+		
 		while (empNums.hasNext()) {
 			Integer empNum = empNums.next();
 			Employee employee = db.get(empNum);
@@ -64,7 +68,7 @@ public class Repository implements IRepository {
 	public Map<Integer, Employee> search(String key, String value) {
 		Map<Integer, Employee> result = new HashMap<>();
 
-		db.keySet().stream().filter(k -> getEmpValue(db.get(k), key).equalsIgnoreCase(value)).forEach(k -> {
+		db.keySet().stream().filter(k -> getEmpValue(db.get(k), key).equalsIgnoreCase(value)).sorted().forEach(k -> {
 			result.put(k, db.get(k));
 		});
 
