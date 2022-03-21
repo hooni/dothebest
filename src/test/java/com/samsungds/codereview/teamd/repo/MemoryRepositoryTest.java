@@ -97,15 +97,6 @@ class MemoryRepositoryTest {
 	}
 	
 	@Test
-	void testDelLimit() {
-		setupData();
-		
-		Map<Integer, Employee> result = repo.delete(Constants.EMPLOYEE_CERTI, "ADV");
-
-		assertEquals(8, result.keySet().size());
-	}
-
-	@Test
 	void testModifyImpl() {
 		setupData();
 		
@@ -116,7 +107,7 @@ class MemoryRepositoryTest {
 			assertEquals("CL3", entry.getValue().getCl());
 		});
 	}
-
+	
 	@Test
 	void testSearchImpl() {
 		setupData();
@@ -133,6 +124,17 @@ class MemoryRepositoryTest {
 		assertEquals(1, result.size());
 		assertEquals("RPO JK", result.get(2014130827).getName());
 		assertEquals("20090201", result.get(2014130827).getBirthday());
+	}
+	
+	@Test
+	void testSearchLimit() {
+		setupData();
+
+		Map<Integer, Employee> result = repo.search(Constants.EMPLOYEE_CERTI, "ADV");
+		assertEquals(8, result.size());
+		
+		result = repo.search(Constants.EMPLOYEE_CERTI, "ADV", 5);
+		assertEquals(5, result.size());
 	}
 
 	@Test

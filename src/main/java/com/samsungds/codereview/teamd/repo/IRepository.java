@@ -12,11 +12,7 @@ public interface IRepository {
 
 	Map<Integer, Employee> delete(String key, String value);
 	
-	Map<Integer, Employee> delete(String key, String value, int limit);
-
 	Map<Integer, Employee> modify(String targetKey, String targetValue, String chageKey, String changeValue);
-	
-	Map<Integer, Employee> modify(String targetKey, String targetValue, String chageKey, String changeValue, int limit);
 	
 	Map<Integer, Employee> search(String key, String value);
 	

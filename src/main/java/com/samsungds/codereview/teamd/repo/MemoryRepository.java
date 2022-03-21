@@ -27,7 +27,19 @@ public class MemoryRepository implements IRepository {
 
 	@Override
 	public Map<Integer, Employee> delete(String key, String value) {
-		return delete(key, value, db.size());
+		Map<Integer, Employee> result = new HashMap<>();
+
+		Iterator<Integer> empNums = db.keySet().stream()
+				.filter(k -> ExtractEmployee.getEmpValue(db.get(k), key).equalsIgnoreCase(value)).sorted().iterator();
+
+		while (empNums.hasNext()) {
+			Integer empNum = empNums.next();
+			Employee employee = db.remove(empNum);
+			result.put(empNum, new Employee(employee.getEmployeeNum(), employee.getName(), employee.getCl(),
+					employee.getPhoneNum(), employee.getBirthday(), employee.getCerti()));
+		}
+
+		return result;
 	}
 
 	@Override
@@ -41,8 +53,10 @@ public class MemoryRepository implements IRepository {
 		while (empNums.hasNext()) {
 			Integer empNum = empNums.next();
 			Employee employee = db.get(empNum);
+
 			result.put(empNum, new Employee(employee.getEmployeeNum(), employee.getName(), employee.getCl(),
 					employee.getPhoneNum(), employee.getBirthday(), employee.getCerti()));
+
 			ExtractEmployee.putEmpValue(employee, chageKey, changeValue);
 		}
 		return result;
@@ -50,14 +64,7 @@ public class MemoryRepository implements IRepository {
 
 	@Override
 	public Map<Integer, Employee> search(String key, String value) {
-		Map<Integer, Employee> result = new HashMap<>();
-
-		db.keySet().stream().filter(k -> ExtractEmployee.getEmpValue(db.get(k), key).equalsIgnoreCase(value)).sorted()
-				.forEach(k -> {
-					result.put(k, db.get(k));
-				});
-
-		return result;
+		return search(key, value, db.size());
 	}
 
 	private Integer getEmpKey(String employeeNum) {
@@ -69,34 +76,14 @@ public class MemoryRepository implements IRepository {
 	}
 
 	@Override
-	public Map<Integer, Employee> delete(String key, String value, int limit) {
+	public Map<Integer, Employee> search(String key, String value, int limit) {
 		Map<Integer, Employee> result = new HashMap<>();
 
-		Iterator<Integer> empNums = db.keySet().stream()
-				.filter(k -> ExtractEmployee.getEmpValue(db.get(k), key).equalsIgnoreCase(value)).sorted().iterator();
-
-		int limitCnt = 0;
-		while (empNums.hasNext()) {
-			Integer empNum = empNums.next();
-			Employee employee = db.remove(empNum);
-			if (limit > limitCnt++)
-				result.put(empNum, new Employee(employee.getEmployeeNum(), employee.getName(), employee.getCl(),
-						employee.getPhoneNum(), employee.getBirthday(), employee.getCerti()));
-		}
+		db.keySet().stream().filter(k -> ExtractEmployee.getEmpValue(db.get(k), key).equalsIgnoreCase(value)).sorted()
+				.limit(limit).forEach(k -> {
+					result.put(k, db.get(k));
+				});
 
 		return result;
-	}
-
-	@Override
-	public Map<Integer, Employee> modify(String targetKey, String targetValue, String chageKey, String changeValue,
-			int limit) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Map<Integer, Employee> search(String key, String value, int limit) {
-		// TODO Auto-generated method stub
-		return null;
 	}
 }

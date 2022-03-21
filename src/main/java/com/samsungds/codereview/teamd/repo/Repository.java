@@ -34,17 +34,6 @@ public class Repository implements IRepository {
 	}
 
 	@Override
-	public Map<Integer, Employee> delete(String key, String value, int limit) {
-		return repo.delete(key, value, limit);
-	}
-
-	@Override
-	public Map<Integer, Employee> modify(String targetKey, String targetValue, String chageKey, String changeValue,
-			int limit) {
-		return repo.modify(targetKey, targetValue, chageKey, changeValue, limit);
-	}
-
-	@Override
 	public Map<Integer, Employee> search(String key, String value, int limit) {
 		return repo.search(key, value, limit);
 	}
