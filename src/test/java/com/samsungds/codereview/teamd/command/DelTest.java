@@ -19,7 +19,6 @@ import static org.mockito.ArgumentMatchers.*;
 
 @ExtendWith(MockitoExtension.class)
 public class DelTest {
-    private IRepository irepo;
 
     @Mock
     Print filePrint;
@@ -29,7 +28,7 @@ public class DelTest {
 
     @BeforeEach
     void setUp() throws IOException {
-        irepo = new Repository();
+        IRepository irepo = new Repository();
         AddCommand add = new AddCommand();
         add.setRepository(irepo);
         add.setFilePrint(filePrint);
@@ -51,8 +50,8 @@ public class DelTest {
     }
 
     @Test
-    void wrongInputData() throws IOException {
-        String wrongInput = "SCH,-p,-d, ,birthday,19771211";
+    void wrongInputData() {
+        String wrongInput = "SCH,-p,-d, ,birthday,11";
 
         assertThrows(Exception.class,() -> del.execute(wrongInput), "");
     }
@@ -74,7 +73,7 @@ public class DelTest {
 
     @Test
     void delExecuteByNameTest() throws IOException {
-        String inputStr1 = "DEL, , , ,name,KYUMOK KIM";
+        String inputStr1 = "DEL, ,-l, ,name,KYUMOK";
 
         assertTrue(del.execute(inputStr1));
         assertTrue(del.execute(inputStr1));
@@ -90,7 +89,7 @@ public class DelTest {
 
     @Test
     void delExecuteByPhoneNumTest() throws IOException {
-        String inputStr1 = "DEL, , , ,phoneNum,010-9777-6055";
+        String inputStr1 = "DEL, ,-m, ,phoneNum,9777";
 
         assertTrue(del.execute(inputStr1));
         assertTrue(del.execute(inputStr1));
@@ -98,7 +97,7 @@ public class DelTest {
 
     @Test
     void delExecuteByBirthdayTest() throws IOException {
-        String inputStr1 = "DEL, , , ,birthday,19980906";
+        String inputStr1 = "DEL, ,-m, ,birthday,09";
 
         assertTrue(del.execute(inputStr1));
         assertTrue(del.execute(inputStr1));

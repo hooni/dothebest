@@ -95,14 +95,14 @@ public class ModTest {
 
     @Test
     void phoneNumModifyTest() throws IOException {
-        String inputData = "MOD, , , ,phoneNum,010-9777-6055,phoneNum,010-9777-5560";
+        String inputData = "MOD, ,-m, ,phoneNum,9777,phoneNum,010-9777-5560";
 
         assertTrue(mod.execute(inputData));
     }
 
     @Test
     void birthdayModifyTest() throws IOException {
-        String inputData = "MOD, , , ,birthday,19980906,birthday,20000906";
+        String inputData = "MOD, ,-d, ,birthday,06,birthday,20000906";
 
         assertTrue(mod.execute(inputData));
     }
