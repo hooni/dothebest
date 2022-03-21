@@ -9,7 +9,7 @@ import java.util.Collection;
 import com.samsungds.codereview.teamd.constant.Constants;
 import com.samsungds.codereview.teamd.vo.Employee;
 
-public class FilePrint {
+public class FilePrint implements Print {
 	private BufferedWriter writer;
 	
 	public FilePrint(String path) throws IOException {

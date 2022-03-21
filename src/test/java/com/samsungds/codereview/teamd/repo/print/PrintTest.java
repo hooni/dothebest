@@ -21,6 +21,7 @@ import org.junit.jupiter.api.Test;
 
 import com.samsungds.codereview.teamd.constant.Constants;
 import com.samsungds.codereview.teamd.print.FilePrint;
+import com.samsungds.codereview.teamd.print.Print;
 import com.samsungds.codereview.teamd.vo.Employee;
 
 public class PrintTest {
@@ -56,7 +57,7 @@ public class PrintTest {
 	@DisplayName("-p Option이 Enable 된 경우 출력을 테스트합니다.")
 	void filePrintOptionDisableTest() {	
 		try {
-			FilePrint print = new FilePrint(outputFilePath);
+			Print print = new FilePrint(outputFilePath);
 			
 			print.print(Constants.COMMAND_ADD, employees, true);
 			print.close();
@@ -78,7 +79,7 @@ public class PrintTest {
 	@DisplayName("-p Option이 Disable 된 경우 출력을 테스트합니다.")
 	void filePrintOptionEnableTest() {
 		try {
-			FilePrint print = new FilePrint(outputFilePath);
+			Print print = new FilePrint(outputFilePath);
 			
 			print.print(Constants.COMMAND_ADD, employees, false);
 			print.close();
@@ -99,7 +100,7 @@ public class PrintTest {
 	@DisplayName("Data가 없는 경우, 출력을 테스트합니다.")
 	void filePrintNoDataTest() {
 		try {
-			FilePrint print = new FilePrint(outputFilePath);
+			Print print = new FilePrint(outputFilePath);
 			
 			print.print(Constants.COMMAND_ADD, new ArrayList(), false);
 			print.close();
