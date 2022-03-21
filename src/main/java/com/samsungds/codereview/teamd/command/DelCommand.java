@@ -8,6 +8,7 @@ import com.samsungds.codereview.teamd.vo.Employee;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Map;
+import java.util.TreeMap;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -31,10 +32,21 @@ public class DelCommand implements ICommand{
 
         ArrayList<Employee> empList = new ArrayList<>();
 
-        if(!map.isEmpty()) {
+        // 임시 Sorting (Treemap 구조로 변경)
+        Map<Integer, Employee> map1 = new TreeMap<>();
+
+        if(map != null) {
             for (Integer key : map.keySet()) {
-                empList.add(map.get(key));
+                map1.put(key, map.get(key));
             }
+        }
+
+        // 임시 Limit 설정
+        int cnt = 0;
+        for (Integer key : map1.keySet()) {
+            empList.add(map1.get(key));
+            cnt++;
+            if(cnt == 5) break;
         }
 
         printResult(empList, isPrintOptionEnable(itemList.get(Constants.INPUT_STR_OPTION1_POS)));

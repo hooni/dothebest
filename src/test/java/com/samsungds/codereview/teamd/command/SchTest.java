@@ -70,21 +70,21 @@ public class SchTest {
 
     @Test
     void schExecuteByNameTest() throws IOException {
-        String inputStr1 = "SCH, ,-l, ,name,KIM";
+        String inputStr1 = "SCH, ,-l, ,name,JHOP";
 
         assertTrue(sch.execute(inputStr1));
     }
 
     @Test
     void schExecuteByCLTest() throws IOException {
-        String inputStr1 = "SCH, , , ,cl,CL2";
+        String inputStr1 = "SCH, , , ,cl,CL4";
 
         assertTrue(sch.execute(inputStr1));
     }
 
     @Test
     void schExecuteByPhoneNumTest() throws IOException {
-        String inputStr1 = "SCH, ,-l, ,phoneNum,6055";
+        String inputStr1 = "SCH, ,-l, ,phoneNum,3153";
 
         assertTrue(sch.execute(inputStr1));
     }
