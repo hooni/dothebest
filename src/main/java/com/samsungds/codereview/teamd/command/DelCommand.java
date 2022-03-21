@@ -73,21 +73,6 @@ public class DelCommand implements ICommand{
         return key;
     }
 
-//    private String checkSearchKey(String strOpt, String key){
-//        if (strOpt.equals(Constants.OPTION2_NAME_FIRST)) return Constants.OPTION2_NAME_FIRST_FIELDNAME;
-//        if (strOpt.equals(Constants.OPTION2_NAME_LAST)){
-//            if (key.equals(Constants.EMPLOYEE_NAME)) return Constants.OPTION2_NAME_LAST_FIELDNAME;
-//            return Constants.OPTION2_PHONENUM_LAST_FIELDNAME;
-//        }
-//        if (strOpt.equals(Constants.OPTION2_PHONENUM_MID)){
-//            if (key.equals(Constants.EMPLOYEE_PHONENUM)) return Constants.OPTION2_PHONENUM_MID_FIELDNAME;
-//            return Constants.OPTION2_BIRTHDAY_MONTH_FIELDNAME;
-//        }
-//        if (strOpt.equals(Constants.OPTION2_BIRTHDAY_YEAR)) return Constants.OPTION2_BIRTHDAY_YEAR_FIELDNAME;
-//        if (strOpt.equals(Constants.OPTION2_BIRTHDAY_DAY)) return Constants.OPTION2_BIRTHDAY_DAY_FIELDNAME;
-//        return key;
-//    }
-
     private ArrayList<String> inputStringToArrayList(String inputStr){
         ArrayList<String> inputStrList;
         inputStrList = Stream.of(inputStr.split(",")).collect(Collectors.toCollection(ArrayList<String>::new));

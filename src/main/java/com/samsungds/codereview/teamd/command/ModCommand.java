@@ -8,7 +8,6 @@ import com.samsungds.codereview.teamd.vo.Employee;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Map;
-import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -89,7 +88,7 @@ public class ModCommand implements ICommand {
     }
 
     private void printResult(ArrayList<Employee> empList, Boolean isEnable) throws IOException {
-        filePrint.print(Constants.COMMAND_DEL, empList, isEnable);
+        filePrint.print(Constants.COMMAND_MODIFY, empList, isEnable);
     }
 
     private Boolean isPrintOptionEnable(String inputStr){
