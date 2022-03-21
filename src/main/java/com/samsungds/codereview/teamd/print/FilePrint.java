@@ -24,24 +24,26 @@ public class FilePrint implements Print {
 	
 	public void print(String command, Collection<Employee> employees, Boolean printOptionEnable) throws IOException {
 		if(employees.size() == 0) {
-			writer.write(command + ',' + Constants.NO_DATA);	
+			write(command + Constants.SEPARATOR_EMPLOYEE + Constants.NO_DATA);
 		}
 		else {
 			if(printOptionEnable) {
 				for(Employee employee : employees) {
-					writer.write(command + ',' + employee.toInfoString());
-					writer.newLine();
+					write(command + Constants.SEPARATOR_EMPLOYEE + employee.toInfoString());
 				}
 			}
 			else {
-				writer.write(command + ',' + employees.size());
-				writer.newLine();
+				write(command + Constants.SEPARATOR_EMPLOYEE + employees.size());
 			}
 		}
 	}
 	
-	
 	public void close() throws IOException {
 		writer.close();
+	}
+	
+	private void write(String str) throws IOException {
+		writer.write(str);	
+		writer.newLine();
 	}
 }
