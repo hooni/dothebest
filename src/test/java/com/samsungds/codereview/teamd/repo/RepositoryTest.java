@@ -140,13 +140,12 @@ class RepositoryTest {
 	void testModifyImpl() {
 		IRepository repo = new Repository();
 		List<Employee> list = readSample();
-		for (Employee emp : list) {
+		for(Employee emp : list) {
 			repo.add(emp);
 		}
-
-		Map<Integer, Employee> result = repo.modify(Constants.EMPLOYEE_CAREER_LEVEL, "CL3",
-				Constants.EMPLOYEE_CAREER_LEVEL, "CL4");
-
+		
+		Map<Integer, Employee> result = repo.modify(Constants.EMPLOYEE_CAREER_LEVEL, "CL3", Constants.EMPLOYEE_CAREER_LEVEL, "CL4");
+		
 		assertEquals(4, result.size());
 		result.entrySet().stream().forEach(entry -> {
 			assertEquals("CL3", entry.getValue().getCl());

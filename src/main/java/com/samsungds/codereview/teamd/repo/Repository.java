@@ -53,7 +53,7 @@ public class Repository implements IRepository {
 
 		Iterator<Integer> empNums = db.keySet().stream()
 				.filter(k -> getEmpValue(db.get(k), targetKey).equalsIgnoreCase(targetValue)).sorted().iterator();
-		
+
 		while (empNums.hasNext()) {
 			Integer empNum = empNums.next();
 			Employee employee = db.get(empNum);
