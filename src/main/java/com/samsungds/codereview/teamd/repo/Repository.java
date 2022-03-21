@@ -7,7 +7,8 @@ import com.samsungds.codereview.teamd.vo.Employee;
 public class Repository implements IRepository {
 
 	IRepository repo;
-
+	
+	@Deprecated
 	public Repository() {
 		repo = new MemoryRepository();
 	}
