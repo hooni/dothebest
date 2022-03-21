@@ -36,7 +36,9 @@ public class Repository implements IRepository {
 				.filter(k -> getEmpValue(db.get(k), key).equalsIgnoreCase(value)).iterator();
 		while (empNums.hasNext()) {
 			Integer empNum = empNums.next();
-			result.put(empNum, db.remove(empNum));
+			Employee employee = db.remove(empNum);
+			result.put(empNum, new Employee(employee.getEmployeeNum(), employee.getName(), employee.getCl(),
+					employee.getPhoneNum(), employee.getBirthday(), employee.getCerti()));
 		}
 
 		return result;
