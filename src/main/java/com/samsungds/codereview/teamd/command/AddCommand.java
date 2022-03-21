@@ -32,7 +32,7 @@ public class AddCommand implements ICommand {
     }
 
     @Override
-    public void setFilePrinter(FilePrint filePrint){
+    public void setFilePrint(FilePrint filePrint){
         this.filePrint = filePrint;
     }
 

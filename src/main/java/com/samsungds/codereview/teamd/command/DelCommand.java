@@ -26,13 +26,9 @@ public class DelCommand implements ICommand{
         Map<Integer, Employee> map = irepo.delete(itemList.get(Constants.INPUT_STR_KEY1),
                 itemList.get(Constants.INPUT_STR_VALUE1));
 
-        if(map.isEmpty()) {
-            // 추후 파일 출력으로 변경 예정
-            return true;
-        }
-
         if(itemList.get(Constants.INPUT_STR_OPTION1_POS).equals(Constants.OPTION1_PRINT)){
             for(Integer key: map.keySet()){
+                // 추후 파일 출력으로 변경 예정
                 System.out.println("DEL,"+map.get(key).toString());
             }
         }
@@ -45,7 +41,7 @@ public class DelCommand implements ICommand{
     }
 
     @Override
-    public void setFilePrinter(FilePrint filePrint){
+    public void setFilePrint(FilePrint filePrint){
         this.filePrint = filePrint;
     }
 
@@ -63,6 +59,10 @@ public class DelCommand implements ICommand{
 
     private void printResult(int cnt, Employee emp){
 
+    }
+
+    private ArrayList<Employee> makeEmployeeList(Map<Integer, Employee> map){
+        return null;
     }
 
 }
