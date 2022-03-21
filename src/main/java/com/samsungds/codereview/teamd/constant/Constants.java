@@ -50,4 +50,14 @@ public interface Constants {
 	public static final Integer INPUT_STR_VALUE1 = 5;
 	public static final Integer INPUT_STR_KEY2 = 6;
 	public static final Integer INPUT_STR_VALUE2 = 7;
+	
+	public static final String OPTION2_NAME_FIRST_FIELDNAME = "nameFirst";
+	public static final String OPTION2_NAME_LAST_FIELDNAME = "nameLast";
+
+	public static final String OPTION2_PHONENUM_MID_FIELDNAME = "phoneNumMid";
+	public static final String OPTION2_PHONENUM_LAST_FIELDNAME = "phoneNumLast";
+
+	public static final String OPTION2_BIRTHDAY_YEAR_FIELDNAME = "birthdayYear";
+	public static final String OPTION2_BIRTHDAY_MONTH_FIELDNAME = "birthdayMonth";
+	public static final String OPTION2_BIRTHDAY_DAY_FIELDNAME = "birthdayDay";
 }

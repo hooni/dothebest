@@ -50,9 +50,9 @@ class RepositoryTest {
 	void testModify() {
 		Map<Integer, Employee> map = new HashMap<>();
 
-		when(repoMock.modify(anyString(), anyString())).thenReturn(map);
+		when(repoMock.modify(anyString(), anyString(), anyString(), anyString())).thenReturn(map);
 
-		assertEquals(map, repoMock.modify("name", "test"));
+		assertEquals(map, repoMock.modify("name", "test", "name", "ok"));
 	}
 
 	@Test
@@ -135,5 +135,16 @@ class RepositoryTest {
 	@Test
 	void testModifyImpl() {
 		IRepository repo = new Repository();
+		List<Employee> list = readSample();
+		for(Employee emp : list) {
+			repo.add(emp);
+		}
+		
+		Map<Integer, Employee> result = repo.modify(Constants.EMPLOYEE_CAREER_LEVEL, "CL3", Constants.EMPLOYEE_CAREER_LEVEL, "CL4");
+		
+		assertEquals(4, result.size());
+		result.entrySet().stream().forEach(entry -> {
+			assertEquals("CL3", entry.getValue().getCl());
+		});
 	}
 }
