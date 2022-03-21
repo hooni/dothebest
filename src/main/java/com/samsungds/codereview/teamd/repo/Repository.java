@@ -35,7 +35,7 @@ public class Repository implements IRepository {
 		Map<Integer, Employee> result = new HashMap<>();
 		
 		Iterator<Integer> empNums = db.keySet().stream()
-				.filter(k -> getEmpValue(db.get(k), key).equalsIgnoreCase(value)).sorted().iterator();
+				.filter(k -> ExtractEmployee.getEmpValue(db.get(k), key).equalsIgnoreCase(value)).sorted().iterator();
 		
 		while (empNums.hasNext()) {
 			Integer empNum = empNums.next();
@@ -52,14 +52,14 @@ public class Repository implements IRepository {
 		Map<Integer, Employee> result = new HashMap<>();
 
 		Iterator<Integer> empNums = db.keySet().stream()
-				.filter(k -> getEmpValue(db.get(k), targetKey).equalsIgnoreCase(targetValue)).sorted().iterator();
-
+				.filter(k -> ExtractEmployee.getEmpValue(db.get(k), targetKey).equalsIgnoreCase(targetValue)).sorted().iterator();
+		
 		while (empNums.hasNext()) {
 			Integer empNum = empNums.next();
 			Employee employee = db.get(empNum);
 			result.put(empNum, new Employee(employee.getEmployeeNum(), employee.getName(), employee.getCl(),
 					employee.getPhoneNum(), employee.getBirthday(), employee.getCerti()));
-			putEmpValue(employee, chageKey, changeValue);
+			ExtractEmployee.putEmpValue(employee, chageKey, changeValue);
 		}
 		return result;
 	}
@@ -68,7 +68,7 @@ public class Repository implements IRepository {
 	public Map<Integer, Employee> search(String key, String value) {
 		Map<Integer, Employee> result = new HashMap<>();
 
-		db.keySet().stream().filter(k -> getEmpValue(db.get(k), key).equalsIgnoreCase(value)).sorted().forEach(k -> {
+		db.keySet().stream().filter(k -> ExtractEmployee.getEmpValue(db.get(k), key).equalsIgnoreCase(value)).sorted().forEach(k -> {
 			result.put(k, db.get(k));
 		});
 
@@ -81,32 +81,5 @@ public class Repository implements IRepository {
 			return Integer.valueOf(Constants.EMPLOYEE_NUM_PREFIX_BEFORE_MILLENIUM + employeeNum);
 		}
 		return Integer.valueOf(Constants.EMPLOYEE_NUM_PREFIX_AFTER_MILLENIUM + employeeNum);
-	}
-
-	private String getEmpValue(Employee emp, String key) {
-		Object result = null;
-		try {
-			Class<?> cls = Class.forName(Employee.class.getName());
-			Method m = cls.getDeclaredMethod("get" + key.substring(0, 1).toUpperCase() + key.substring(1));
-			result = m.invoke(emp);
-		} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException | ClassNotFoundException
-				| NoSuchMethodException | SecurityException e) {
-			e.printStackTrace();
-			return "";
-		}
-
-		return String.valueOf(result);
-	}
-
-	private void putEmpValue(Employee emp, String key, String value) {
-		try {
-			Class<?> cls = Class.forName(Employee.class.getName());
-			Method m = cls.getDeclaredMethod("set" + key.substring(0, 1).toUpperCase() + key.substring(1),
-					String.class);
-			m.invoke(emp, value);
-		} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException | ClassNotFoundException
-				| NoSuchMethodException | SecurityException e) {
-			e.printStackTrace();
-		}
 	}
 }
