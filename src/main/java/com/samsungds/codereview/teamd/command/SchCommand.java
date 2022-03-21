@@ -14,26 +14,22 @@ import java.util.stream.Stream;
 public class SchCommand implements ICommand{
     private IRepository irepo;
     private Print filePrint;
-//    private FilePrint filePrint;
 
     @Override
     public Boolean execute(String inputStr) throws IOException {
-        System.out.println("======================");
         if(irepo == null) throw new NullPointerException("Error : Repository Link");
-        System.out.println("Repository Null Check OK");
 
         ArrayList<String> itemList = inputStringToArrayList(inputStr);
-        System.out.println("itemList Creation OK");
 
         if(!(itemList.get(Constants.INPUT_STR_COMMAND_POS).equals(Constants.COMMAND_SEARCH)))
             throw new IllegalArgumentException();
+
+        if(itemList.size() != 6) throw new IllegalArgumentException("Error : Argument Count");
 
         System.out.println("Input String Check OK");
 
         Map<Integer, Employee> map = irepo.search(itemList.get(Constants.INPUT_STR_KEY1),
                 itemList.get(Constants.INPUT_STR_VALUE1));
-
-        System.out.println("Get Map Data OK");
 
         ArrayList<Employee> empList = new ArrayList<>();
 
@@ -43,14 +39,8 @@ public class SchCommand implements ICommand{
             }
         }
 
-        System.out.println("Make Employee List OK");
 
         printResult(empList, isPrintOptionEnable(itemList.get(Constants.INPUT_STR_OPTION1_POS)));
-
-        System.out.println("Print Result");
-        System.out.println("COMMAND : " + Constants.COMMAND_SEARCH);
-        System.out.println("Total Cnt : " + empList.size());
-        System.out.println("========================");
 
         return true;
     }

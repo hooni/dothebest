@@ -1,7 +1,6 @@
 package com.samsungds.codereview.teamd.command;
 
 import com.samsungds.codereview.teamd.constant.Constants;
-import com.samsungds.codereview.teamd.print.FilePrint;
 import com.samsungds.codereview.teamd.print.Print;
 import com.samsungds.codereview.teamd.repo.IRepository;
 import com.samsungds.codereview.teamd.vo.Employee;
@@ -13,16 +12,17 @@ import java.util.stream.Stream;
 
 public class AddCommand implements ICommand {
     private IRepository irepo;
-    private Print filePrint;
 
     @Override
-    public Boolean execute(String inputStr) throws IOException {
+    public Boolean execute(String inputStr) {
         if(irepo == null) throw new NullPointerException("Error : Repository Link");
 
         ArrayList<String> itemList = inputStringToArrayList(inputStr);
 
         if(!(itemList.get(Constants.INPUT_STR_COMMAND_POS).equals(Constants.COMMAND_ADD)))
             throw new IllegalArgumentException();
+
+        if(itemList.size() != 10) throw new IllegalArgumentException("Error : Argument Count");
 
         Employee emp = empMaker(itemList.get(Constants.INPUT_STR_EMP_NUM_POS),
                 itemList.get(Constants.INPUT_STR_EMP_NAME_POS),
@@ -31,18 +31,11 @@ public class AddCommand implements ICommand {
                 itemList.get(Constants.INPUT_STR_EMP_BIRTHDAY_POS),
                 itemList.get(Constants.INPUT_STR_EMP_CERTI_POS));
 
-        ArrayList<Employee> empList = new ArrayList<>();
-        empList.add(emp);
-
-        filePrint.print(Constants.COMMAND_ADD, empList, false);
-
         return irepo.add(emp) != 0;
     }
 
     @Override
-    public void setFilePrint(Print filePrint){
-        this.filePrint = filePrint;
-    }
+    public void setFilePrint(Print filePrint) {}
 
     @Override
     public void setRepository(IRepository irepo){
