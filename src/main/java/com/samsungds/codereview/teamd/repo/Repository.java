@@ -60,7 +60,13 @@ public class Repository implements IRepository {
 
 	@Override
 	public Map<Integer, Employee> search(String key, String value) {
-		return null;
+		Map<Integer, Employee> result = new HashMap<>();
+
+		db.keySet().stream().filter(k -> getEmpValue(db.get(k), key).equalsIgnoreCase(value)).forEach(k -> {
+			result.put(k, db.get(k));
+		});
+
+		return result;
 	}
 
 	private Integer getEmpKey(String employeeNum) {
