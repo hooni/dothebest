@@ -10,6 +10,7 @@ import java.util.stream.Stream;
 
 public class AddCommand implements ICommand {
     private IRepository irepo;
+    private String path;
 
     public AddCommand(IRepository irepo){
         setRepository(irepo);
@@ -31,7 +32,13 @@ public class AddCommand implements ICommand {
         return irepo.add(emp) != 0;
     }
 
-    private void setRepository(IRepository irepo){
+    @Override
+    public void setPrintPath(String path){
+        this.path = path;
+    }
+
+    @Override
+    public void setRepository(IRepository irepo){
         if(irepo == null) throw new NullPointerException("Error : Repository Link");
         this.irepo = irepo;
     }

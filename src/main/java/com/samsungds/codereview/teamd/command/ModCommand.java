@@ -11,6 +11,7 @@ import java.util.stream.Stream;
 
 public class ModCommand implements ICommand {
     private IRepository irepo;
+    private String path;
 
     public ModCommand(IRepository irepo){
         setRepository(irepo);
@@ -25,7 +26,13 @@ public class ModCommand implements ICommand {
         return true;
     }
 
-    private void setRepository(IRepository irepo){
+    @Override
+    public void setPrintPath(String path){
+        this.path = path;
+    }
+
+    @Override
+    public void setRepository(IRepository irepo){
         if(irepo == null) throw new NullPointerException("Error : Repository Link");
         this.irepo = irepo;
     }

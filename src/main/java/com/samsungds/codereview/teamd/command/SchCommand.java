@@ -11,6 +11,7 @@ import java.util.stream.Stream;
 
 public class SchCommand implements ICommand{
     private IRepository irepo;
+    private String path;
 
     public SchCommand(IRepository irepo){
         setRepository(irepo);
@@ -24,12 +25,19 @@ public class SchCommand implements ICommand{
 
         Map<Integer, Employee> map = irepo.search(itemList.get(Constants.INPUT_STR_KEY1), itemList.get(Constants.INPUT_STR_VALUE1));
 
+        //if(itemList.get(Constants.INPUT_STR_OPTION1_POS))
 
 
         return null;
     }
 
-    private void setRepository(IRepository irepo){
+    @Override
+    public void setPrintPath(String path){
+        this.path = path;
+    }
+
+    @Override
+    public void setRepository(IRepository irepo){
         if(irepo == null) throw new NullPointerException("Error : Repository Link");
         this.irepo = irepo;
     }
