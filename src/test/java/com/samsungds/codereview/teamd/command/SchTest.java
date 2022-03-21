@@ -18,7 +18,6 @@ import static org.mockito.ArgumentMatchers.*;
 
 @ExtendWith(MockitoExtension.class)
 public class SchTest {
-    private IRepository irepo;
 
     @Mock
     Print filePrint;
@@ -28,7 +27,7 @@ public class SchTest {
 
     @BeforeEach
     void setUp() throws IOException {
-        irepo = new Repository();
+        IRepository irepo = new Repository();
         AddCommand add = new AddCommand();
         add.setRepository(irepo);
         add.setFilePrint(filePrint);
@@ -50,7 +49,7 @@ public class SchTest {
     }
 
     @Test
-    void wrongInputData() throws IOException {
+    void wrongInputData(){
         String wrongInput = "MOD,-p, , ,birthday,19980906,birthday,20000906";
 
         assertThrows(Exception.class,() -> sch.execute(wrongInput), "");
@@ -71,7 +70,7 @@ public class SchTest {
 
     @Test
     void schExecuteByNameTest() throws IOException {
-        String inputStr1 = "SCH, , , ,name,KYUMOK KIM";
+        String inputStr1 = "SCH, ,-l, ,name,KIM";
 
         assertTrue(sch.execute(inputStr1));
     }
@@ -85,14 +84,14 @@ public class SchTest {
 
     @Test
     void schExecuteByPhoneNumTest() throws IOException {
-        String inputStr1 = "SCH, , , ,phoneNum,010-9777-6055";
+        String inputStr1 = "SCH, ,-l, ,phoneNum,6055";
 
         assertTrue(sch.execute(inputStr1));
     }
 
     @Test
     void schExecuteByBirthdayTest() throws IOException {
-        String inputStr1 = "SCH, , , ,birthday,19980906";
+        String inputStr1 = "SCH, ,-y, ,birthday,1998";
 
         assertTrue(sch.execute(inputStr1));
     }
