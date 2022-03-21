@@ -94,6 +94,12 @@ public enum EnumEmployee {
 			return employee.getBirthdayYear();
 		}
 	},
+	birthdayDay {
+		@Override
+		Object getValue(Employee employee) {
+			return employee.getBirthdayDay();
+		}
+	},
 	birthdayMonth {
 		@Override
 		Object getValue(Employee employee) {
