@@ -45,4 +45,5 @@ public class AddCommand implements ICommand {
     private Employee empMaker(String empNum, String name, String cl, String phoneNum, String birtday, String certi){
         return new Employee(empNum, name, cl, phoneNum, birtday, certi);
     }
+
 }

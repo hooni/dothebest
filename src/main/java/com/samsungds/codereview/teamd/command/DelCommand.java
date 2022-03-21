@@ -64,4 +64,7 @@ public class DelCommand implements ICommand{
         inputStrList = Stream.of(inputStr.split(",")).collect(Collectors.toCollection(ArrayList<String>::new));
         return inputStrList;
     }
+    
+
+
 }

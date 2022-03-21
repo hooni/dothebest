@@ -33,6 +33,7 @@ public class Repository implements IRepository {
 		Map<Integer, Employee> result = new HashMap<>();
 
 		Iterator<Integer> empNums = db.keySet().stream().filter(k -> getEmpValue(db.get(k), key).equalsIgnoreCase(value)).iterator();
+		// 여기서 Error 발생함
 		while(empNums.hasNext()) {
 			Integer empNum = empNums.next();
 			result.put(empNum, db.remove(empNum));
@@ -68,7 +69,7 @@ public class Repository implements IRepository {
 		} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException | ClassNotFoundException
 				| NoSuchMethodException | SecurityException e) {
 			e.printStackTrace();
-			return "";
+//			return "";
 		}
 
 		return String.valueOf(result);
