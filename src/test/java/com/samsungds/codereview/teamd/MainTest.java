@@ -19,9 +19,8 @@ public class MainTest {
 	@Test
 	void validTest() throws IOException {
 
-		File outFile = new File(args[1]);
-		System.out.println(outFile.getAbsolutePath());
 		Main.main(args);
+		File outFile = new File(args[1]);
 		assertEquals(true, outFile.exists());
 		outFile.delete();
 	}
