@@ -29,6 +29,11 @@ public interface Constants {
 	public static final String OPTION2_BIRTHDAY_MONTH = "-m";
 	public static final String OPTION2_BIRTHDAY_DAY = "-d";
 
+	public static final char SEPARATOR_EMPLOYEE_NUM = '5';
+	public static final String EMPLOYEE_NUM_PREFIX_BEFORE_MILLENIUM = "19";
+	public static final String EMPLOYEE_NUM_PREFIX_AFTER_MILLENIUM = "20";
+
+	public static final String NO_DATA = "NONE";
 	
 	public static final String OPTION2_NAME_FIRST_FIELDNAME = "nameFirst";
 	public static final String OPTION2_NAME_LAST_FIELDNAME = "nameLast";
@@ -39,10 +44,4 @@ public interface Constants {
 	public static final String OPTION2_BIRTHDAY_YEAR_FIELDNAME = "birthdayYear";
 	public static final String OPTION2_BIRTHDAY_MONTH_FIELDNAME = "birthdayMonth";
 	public static final String OPTION2_BIRTHDAY_DAY_FIELDNAME = "birthdayDay";
-	
-	public static final char SEPARATOR_EMPLOYEE_NUM = '5';
-	public static final String EMPLOYEE_NUM_PREFIX_BEFORE_MILLENIUM = "19";
-	public static final String EMPLOYEE_NUM_PREFIX_AFTER_MILLENIUM = "20";
-
-  public static final String NO_DATA = "NONE";
 }
