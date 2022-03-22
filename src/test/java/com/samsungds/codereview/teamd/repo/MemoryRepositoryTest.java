@@ -131,10 +131,17 @@ class MemoryRepositoryTest {
 		setupData();
 
 		Map<Integer, Employee> result = repo.search(Constants.EMPLOYEE_CERTI, "ADV");
+		assertEquals(5, result.size());
+		
+		result = repo.search(Constants.EMPLOYEE_CERTI, "ADV", 8);
 		assertEquals(8, result.size());
 		
-		result = repo.search(Constants.EMPLOYEE_CERTI, "ADV", 5);
-		assertEquals(5, result.size());
+		assertEquals(8, repo.searchCnt(Constants.EMPLOYEE_CERTI, "ADV"));
+	}
+	
+	@Test
+	void testSearchOption1() {
+		setupData();
 	}
 
 	@Test

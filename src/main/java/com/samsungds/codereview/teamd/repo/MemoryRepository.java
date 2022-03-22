@@ -57,20 +57,22 @@ public class MemoryRepository implements IRepository {
 
 	@Override
 	public int deleteCnt(String key, String value) {
-		Iterator<Integer> empNums = getMatchingKeys(key, value).iterator();
-		
-		int size = 0;
-		List<Integer> keyList = new ArrayList<Integer>();
-		while(empNums.hasNext()) {
-			keyList.add(empNums.next());
-			size++;
-		}
-		
+		List<Integer> keyList = getDeleteKeys(key, value);
+
 		for(Integer k : keyList) {
 			db.remove(k);
 		}
 		
-		return (int)size;
+		return keyList.size();
+	}
+
+	private List<Integer> getDeleteKeys(String key, String value) {
+		Iterator<Integer> empNums = getMatchingKeys(key, value).sorted().iterator();
+		List<Integer> keyList = new ArrayList<Integer>();
+		while(empNums.hasNext()) {
+			keyList.add(empNums.next());
+		}
+		return keyList;
 	}
 
 	@Override
@@ -95,23 +97,14 @@ public class MemoryRepository implements IRepository {
 
 	private Map<Integer, Employee> delete(String key, String value, int printOptionCnt) {
 		Map<Integer, Employee> result = new TreeMap<>();
-		List<Integer> removeKeys = new ArrayList<>();
-		
-		Iterator<Integer> empNums = getMatchingKeys(key, value).sorted().iterator();
+		List<Integer> keyList = getDeleteKeys(key, value);
 
-		//concurrentmodification ¹®Á¦.
 		int limitCnt = 0;
-		while (empNums.hasNext()) {
-			Integer empNum = empNums.next();
-			Employee employee = db.get(empNum);
-			removeKeys.add(empNum);
+		for(Integer empNum : keyList) {
+			Employee employee = db.remove(empNum);
 			if (printOptionCnt > limitCnt++)
 				result.put(empNum, new Employee(employee.getEmployeeNum(), employee.getName(), employee.getCl(),
 						employee.getPhoneNum(), employee.getBirthday(), employee.getCerti()));
-		}
-		
-		for(Integer k : removeKeys) {
-			db.remove(k);
 		}
 
 		return result;
