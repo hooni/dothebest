@@ -6,7 +6,7 @@ import com.samsungds.codereview.teamd.validator.command.DelCommandValidator;
 import com.samsungds.codereview.teamd.validator.command.ModCommandValidator;
 import com.samsungds.codereview.teamd.validator.command.SchCommandValidator;
 
-public class CommandValidator {
+public class CommandValidator implements Validator {
 
 	public static final CommandValidator ADD = new CommandValidator(Constants.COMMAND_ADD, new AddCommandValidator());
 	public static final CommandValidator MOD = new CommandValidator(Constants.COMMAND_MODIFY, new ModCommandValidator());
@@ -37,5 +37,10 @@ public class CommandValidator {
 			case Constants.COMMAND_SEARCH: return SCH;
 			default : throw new IllegalArgumentException(column);
 		}
+	}
+
+	@Override
+	public boolean isValid(String string) {
+		return validate(string);
 	}
 }
