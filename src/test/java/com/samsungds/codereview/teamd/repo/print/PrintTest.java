@@ -59,7 +59,7 @@ public class PrintTest {
 		try {
 			Print print = new FilePrint(outputFilePath);
 			
-			print.print(Constants.COMMAND_ADD, employees, true);
+			print.print(Constants.COMMAND_ADD, employees);
 			print.close();
 			
 			int count = 0;
@@ -81,14 +81,13 @@ public class PrintTest {
 		try {
 			Print print = new FilePrint(outputFilePath);
 			
-			print.print(Constants.COMMAND_ADD, employees, false);
+			print.print(Constants.COMMAND_ADD, 2);
 			print.close();
 			
 			int count = 0;
 			BufferedReader inFile = new BufferedReader(new FileReader(file)); 
 			String[] sLine = inFile.readLine().split(Constants.SEPARATOR_EMPLOYEE);
-			
-			
+					
 			Assertions.assertEquals(2, Integer.parseInt(sLine[1]));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -102,7 +101,7 @@ public class PrintTest {
 		try {
 			Print print = new FilePrint(outputFilePath);
 			
-			print.print(Constants.COMMAND_ADD, new ArrayList(), false);
+			print.print(Constants.COMMAND_ADD, new ArrayList());
 			print.close();
 			
 			int count = 0;
