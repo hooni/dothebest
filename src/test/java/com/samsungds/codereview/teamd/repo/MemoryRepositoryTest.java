@@ -131,10 +131,17 @@ class MemoryRepositoryTest {
 		setupData();
 
 		Map<Integer, Employee> result = repo.search(Constants.EMPLOYEE_CERTI, "ADV");
-		assertEquals(8, result.size());
-		
-		result = repo.search(Constants.EMPLOYEE_CERTI, "ADV", 5);
 		assertEquals(5, result.size());
+		
+		result = repo.search(Constants.EMPLOYEE_CERTI, "ADV", 8);
+		assertEquals(8, result.size());
+		assertEquals(8, repo.searchCnt(Constants.EMPLOYEE_CERTI, "ADV"));
+	}
+	
+	@Test
+	void testDeleteOption1() {
+		setupData();
+		assertEquals(8, repo.searchCnt(Constants.EMPLOYEE_CERTI, "ADV"));
 	}
 
 	@Test
@@ -204,8 +211,8 @@ class MemoryRepositoryTest {
 		int size = repo.searchCnt(Constants.EMPLOYEE_NAME, "TTETHU HBO");
 		assertEquals(1, size);
 
-		size = repo.searchCnt(Constants.EMPLOYEE_CAREER_LEVEL, "CL2");
-		assertEquals(2, size);
+		size = repo.searchCnt(Constants.EMPLOYEE_CAREER_LEVEL, "CL4");
+		assertEquals(9, size);
 
 		size = repo.searchCnt(Constants.EMPLOYEE_BIRTHDAY, "20090201");
 		assertEquals(1, size);
