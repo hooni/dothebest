@@ -31,4 +31,17 @@ public class EmployeeValidator {
 		}
 		return true;
 	}
+	
+	public static EmployeeValidator getValidator(String column) {
+		if(column == null) throw new IllegalArgumentException(column);
+		switch (column) {
+			case Constants.EMPLOYEE_NUM: return EMPLOYEENUM;
+			case Constants.EMPLOYEE_NAME: return NAME;
+			case Constants.EMPLOYEE_CAREER_LEVEL: return CL;
+			case Constants.EMPLOYEE_PHONENUM: return PHONENUM;
+			case Constants.EMPLOYEE_BIRTHDAY: return BIRTHDAY;
+			case Constants.EMPLOYEE_CERTI: return CERTI;
+			default : throw new IllegalArgumentException(column);
+		}
+	}
 }
