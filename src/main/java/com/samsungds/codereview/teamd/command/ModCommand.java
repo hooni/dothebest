@@ -18,24 +18,26 @@ public class ModCommand extends SearchBaseCommand {
     @Override
     public Boolean execute(String inputStr) throws IOException {
         if(getRepository() == null) throw new NullPointerException("Error : Repository Link");
-
         CommandValidator.MOD.validate(inputStr);
-
         ArrayList<String> itemList = inputStringToArrayList(inputStr);
+        printSelect(itemList);
+        return true;
+    }
 
+    @Override
+    protected void printSelect(ArrayList<String> itemList) throws IOException {
         if(itemList.get(Constants.INPUT_STR_OPTION1_POS).equals(Constants.OPTION1_PRINT)) {
             Map<Integer, Employee> map = getRepository().modify(checkSearchKey(itemList.get(Constants.INPUT_STR_OPTION2_POS),
                             itemList.get(Constants.INPUT_STR_KEY1)), itemList.get(Constants.INPUT_STR_VALUE1),
                     itemList.get(Constants.INPUT_STR_KEY2),
                     itemList.get(Constants.INPUT_STR_VALUE2));
             printResult(commandName, transMaptoList(map));
-            return true;
+            return;
         }
 
         printResult(commandName, getRepository().modifyCnt(checkSearchKey(itemList.get(Constants.INPUT_STR_OPTION2_POS),
                         itemList.get(Constants.INPUT_STR_KEY1)), itemList.get(Constants.INPUT_STR_VALUE1),
                 itemList.get(Constants.INPUT_STR_KEY2),
                 itemList.get(Constants.INPUT_STR_VALUE2)));
-        return true;
     }
 }
