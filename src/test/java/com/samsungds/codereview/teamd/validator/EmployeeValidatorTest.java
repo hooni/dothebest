@@ -5,6 +5,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
 
+import com.samsungds.codereview.teamd.constant.Constants;
+
 public class EmployeeValidatorTest {
 
 	@Test
@@ -76,6 +78,18 @@ public class EmployeeValidatorTest {
 		assertThrows(IllegalArgumentException.class, () -> validator.validate(null));
 		assertThrows(IllegalArgumentException.class, () -> validator.validate("AD"));
 		assertThrows(IllegalArgumentException.class, () -> validator.validate("EXP"));
+	}
+	
+	@Test
+	void getValidatorTest() {
+		assertEquals(true, EmployeeValidator.getValidator(Constants.EMPLOYEE_NUM) == EmployeeValidator.EMPLOYEENUM);
+		assertEquals(true, EmployeeValidator.getValidator(Constants.EMPLOYEE_NAME) == EmployeeValidator.NAME);
+		assertEquals(true, EmployeeValidator.getValidator(Constants.EMPLOYEE_CAREER_LEVEL) == EmployeeValidator.CL);
+		assertEquals(true, EmployeeValidator.getValidator(Constants.EMPLOYEE_PHONENUM) == EmployeeValidator.PHONENUM);
+		assertEquals(true, EmployeeValidator.getValidator(Constants.EMPLOYEE_BIRTHDAY) == EmployeeValidator.BIRTHDAY);
+		assertEquals(true, EmployeeValidator.getValidator(Constants.EMPLOYEE_CERTI) == EmployeeValidator.CERTI);
+		assertThrows(IllegalArgumentException.class, () -> EmployeeValidator.getValidator(null));
+		assertThrows(IllegalArgumentException.class, () -> EmployeeValidator.getValidator(Constants.NO_DATA));
 	}
 
 }

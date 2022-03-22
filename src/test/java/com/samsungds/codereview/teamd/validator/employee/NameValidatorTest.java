@@ -17,17 +17,18 @@ public class NameValidatorTest {
 	@Test
 	void validTest() {
 		assertEquals(true, validator.isValid("WONGEUN LEE"));
+		assertEquals(true, validator.isValid("JOSEPH WILLIAMS"));
 	}
 	
 	@Test
 	void lengthTest() {
-		assertEquals(false, validator.isValid("LLLLLLLLL LLLLL"));
+		assertEquals(false, validator.isValid("LLLLLLLLL LLLLLL"));
 	}
 	
 	@Test
 	void splitTest() {
 		assertEquals(false, validator.isValid("LLLLLLLLL LL LL"));
-		assertEquals(false, validator.isValid("LLLLLLLLLLLLLLL"));
+		assertEquals(false, validator.isValid("LLLLLLLLLLLLLLLL"));
 	}
 	
 	@Test

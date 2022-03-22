@@ -2,7 +2,7 @@ package com.samsungds.codereview.teamd.command;
 
 import com.samsungds.codereview.teamd.print.Print;
 import com.samsungds.codereview.teamd.repo.IRepository;
-import com.samsungds.codereview.teamd.repo.Repository;
+import com.samsungds.codereview.teamd.repo.MemoryRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -30,13 +30,13 @@ public class AddTest {
     @BeforeEach
     void setUp() throws IOException {
         add = new AddCommand();
-        IRepository irepo = new Repository();
+        IRepository irepo = new MemoryRepository();
         inputStr1 = "ADD, , , ,18050301,KYUMOK KIM,CL2,010-9777-6055,19980906,PRO";
 
         add.setFilePrint(filePrint);
         add.setRepository(irepo);
 
-        Mockito.lenient().doNothing().when(filePrint).print(anyString(), anyCollection(), anyBoolean());
+        Mockito.lenient().doNothing().when(filePrint).print(anyString(), anyCollection());
     }
 
     @Test
@@ -47,12 +47,12 @@ public class AddTest {
     }
 
     @Test
-    void addExecuteTest() throws IOException {
+    void addExecuteTest() {
         assertTrue(add.execute(inputStr1));
     }
 
     @Test
-    void sameInputStringTest() throws IOException {
+    void sameInputStringTest() {
         String inputStr2 = "ADD, , , ,18050301,KYUMOK KIM,CL2,010-9777-6055,19980906,PRO";
 
         assertTrue(add.execute(inputStr1));
@@ -60,8 +60,8 @@ public class AddTest {
     }
 
     @Test
-    void haveSameEmployeeNumTest() throws IOException {
-        String inputStr2 = "ADD, , , ,18050301,DAVID KIM,CL3,010-1234-5678,19880516,EXP";
+    void haveSameEmployeeNumTest() {
+        String inputStr2 = "ADD, , , ,18050301,DAVID KIM,CL3,010-1234-5678,19880516,EX";
 
         assertTrue(add.execute(inputStr1));
         assertFalse(add.execute(inputStr2));

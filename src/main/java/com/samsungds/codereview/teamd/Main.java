@@ -29,7 +29,11 @@ public class Main {
 			String line;
 			while ((line = br.readLine()) != null) {
 				if (line == null || line.trim().length() == 0) continue;
-				CommandFactory.getCommand(line.split(Constants.SEPARATOR_EMPLOYEE)[0], repository, print).execute(line);
+				try {
+					CommandFactory.getCommand(line.split(Constants.SEPARATOR_EMPLOYEE)[0], repository, print).execute(line);
+				} catch (IllegalArgumentException ignore) {
+					ignore.printStackTrace();
+				}
 			}
 		} catch (Exception exception) {
 			exception.printStackTrace();

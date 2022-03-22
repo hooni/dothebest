@@ -3,77 +3,61 @@ package com.samsungds.codereview.teamd.command;
 import com.samsungds.codereview.teamd.constant.Constants;
 import com.samsungds.codereview.teamd.print.Print;
 import com.samsungds.codereview.teamd.repo.IRepository;
+import com.samsungds.codereview.teamd.validator.CommandValidator;
 import com.samsungds.codereview.teamd.vo.Employee;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Map;
-import java.util.TreeMap;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class SchCommand implements ICommand{
+public class SchCommand implements ICommand {
     private IRepository irepo;
     private Print filePrint;
+    private final String commandName;
+    private final CommandValidator validator;
+
+    public SchCommand(){
+        this.commandName = Constants.COMMAND_SEARCH;
+        validator = CommandValidator.getValidator(commandName);
+    }
 
     @Override
     public Boolean execute(String inputStr) throws IOException {
-        if(irepo == null) throw new NullPointerException("Error : Repository Link");
+        if (irepo == null) throw new NullPointerException("Error : Repository Link");
+
+        validator.validate(inputStr);
 
         ArrayList<String> itemList = inputStringToArrayList(inputStr);
 
-        if(!(itemList.get(Constants.INPUT_STR_COMMAND_POS).equals(Constants.COMMAND_SEARCH)))
-            throw new IllegalArgumentException();
+        if (itemList.get(Constants.INPUT_STR_OPTION1_POS).equals(Constants.OPTION1_PRINT)) {
+            Map<Integer, Employee> map = irepo.search(checkSearchKey(itemList.get(Constants.INPUT_STR_OPTION2_POS),
+                    itemList.get(Constants.INPUT_STR_KEY1)), itemList.get(Constants.INPUT_STR_VALUE1));
+            printResult(transMaptoList(map));
+            return true;
+        }
 
-        if(itemList.size() != 6) throw new IllegalArgumentException("Error : Argument Count");
-
-        Map<Integer, Employee> map = irepo.search(checkSearchKey(itemList.get(Constants.INPUT_STR_OPTION2_POS),
+        int cnt = irepo.searchCnt(checkSearchKey(itemList.get(Constants.INPUT_STR_OPTION2_POS),
                 itemList.get(Constants.INPUT_STR_KEY1)), itemList.get(Constants.INPUT_STR_VALUE1));
 
-        ArrayList<Employee> empList = new ArrayList<>();
-
-        // 임시 Sorting (Treemap 구조로 변경)
-        Map<Integer, Employee> map1 = new TreeMap<>();
-
-        if(map != null) {
-            for (Integer key : map.keySet()) {
-                map1.put(key, map.get(key));
-            }
-        }
-
-        // 임시 Limit 설정
-        int cnt = 0;
-        for (Integer key : map1.keySet()) {
-            empList.add(map1.get(key));
-            cnt++;
-            if(cnt == 5) break;
-        }
-
-//        System.out.println("=============");
-//        System.out.println("Map Cnt : " + map.size());
-//        for(Employee emp: map.values()){
-//            System.out.println(emp.toInfoString());
-//        }
-//        System.out.println("=============");
-
-        printResult(empList, isPrintOptionEnable(itemList.get(Constants.INPUT_STR_OPTION1_POS)));
-
+        printResult(cnt);
         return true;
     }
 
     @Override
-    public void setFilePrint(Print filePrint){
+    public void setFilePrint(Print filePrint) {
         this.filePrint = filePrint;
     }
 
     @Override
-    public void setRepository(IRepository irepo){
-        if(irepo == null) throw new NullPointerException("Error : Repository Link");
+    public void setRepository(IRepository irepo) {
+        if (irepo == null) throw new NullPointerException("Error : Repository is Null");
         this.irepo = irepo;
     }
 
-    private String checkSearchKey(String strOpt, String key){
-        switch (strOpt){
+    private String checkSearchKey(String strOpt, String key) {
+        switch (strOpt) {
             case Constants.OPTION2_NAME_FIRST:
                 return Constants.OPTION2_NAME_FIRST_FIELDNAME;
             case Constants.OPTION2_NAME_LAST:
@@ -92,17 +76,25 @@ public class SchCommand implements ICommand{
         return key;
     }
 
-    private ArrayList<String> inputStringToArrayList(String inputStr){
+    private ArrayList<String> inputStringToArrayList(String inputStr) {
         ArrayList<String> inputStrList;
         inputStrList = Stream.of(inputStr.split(",")).collect(Collectors.toCollection(ArrayList<String>::new));
         return inputStrList;
     }
 
-    private void printResult(ArrayList<Employee> empList, Boolean isEnable) throws IOException {
-        filePrint.print(Constants.COMMAND_SEARCH, empList, isEnable);
+    private ArrayList<Employee> transMaptoList(Map<Integer, Employee> map) {
+        ArrayList<Employee> empList = new ArrayList<>();
+        for (Integer key : map.keySet()) {
+            empList.add(map.get(key));
+        }
+        return empList;
     }
 
-    private Boolean isPrintOptionEnable(String inputStr){
-        return Constants.OPTION1_PRINT.equals(inputStr);
+    private void printResult(ArrayList<Employee> empList) throws IOException {
+        filePrint.print(commandName, empList);
+    }
+
+    private void printResult(int cnt) throws IOException {
+        filePrint.print(commandName, cnt);
     }
 }

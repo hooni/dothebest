@@ -3,58 +3,49 @@ package com.samsungds.codereview.teamd.command;
 import com.samsungds.codereview.teamd.constant.Constants;
 import com.samsungds.codereview.teamd.print.Print;
 import com.samsungds.codereview.teamd.repo.IRepository;
+import com.samsungds.codereview.teamd.validator.CommandValidator;
 import com.samsungds.codereview.teamd.vo.Employee;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Map;
-import java.util.TreeMap;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class ModCommand implements ICommand {
     private IRepository irepo;
     private Print filePrint;
+    private final String commandName;
+    private final CommandValidator validator;
+
+    public ModCommand(){
+        this.commandName = Constants.COMMAND_MODIFY;
+        validator = CommandValidator.getValidator(commandName);
+    }
 
     @Override
     public Boolean execute(String inputStr) throws IOException {
         if(irepo == null) throw new NullPointerException("Error : Repository Link");
+
+        validator.validate(inputStr);
+
         ArrayList<String> itemList = inputStringToArrayList(inputStr);
 
-        if(!(itemList.get(Constants.INPUT_STR_COMMAND_POS).equals(Constants.COMMAND_MODIFY)))
-            throw new IllegalArgumentException("Error : Command");
+        if(itemList.get(Constants.INPUT_STR_OPTION1_POS).equals(Constants.OPTION1_PRINT)) {
+            Map<Integer, Employee> map = irepo.modify(checkSearchKey(itemList.get(Constants.INPUT_STR_OPTION2_POS),
+                            itemList.get(Constants.INPUT_STR_KEY1)), itemList.get(Constants.INPUT_STR_VALUE1),
+                    itemList.get(Constants.INPUT_STR_KEY2),
+                    itemList.get(Constants.INPUT_STR_VALUE2));
+            printResult(transMaptoList(map));
+            return true;
+        }
 
-        if(itemList.size() != 8) throw new IllegalArgumentException("Error : Argument Count");
-
-        if(itemList.get(Constants.INPUT_STR_KEY2).equals(Constants.EMPLOYEE_NUM))
-            throw new IllegalArgumentException("Error : Can't Modify Employee Number");
-
-        Map<Integer, Employee> map = irepo.modify(checkSearchKey(itemList.get(Constants.INPUT_STR_OPTION2_POS),
+        int cnt = irepo.modifyCnt(checkSearchKey(itemList.get(Constants.INPUT_STR_OPTION2_POS),
                         itemList.get(Constants.INPUT_STR_KEY1)), itemList.get(Constants.INPUT_STR_VALUE1),
                 itemList.get(Constants.INPUT_STR_KEY2),
                 itemList.get(Constants.INPUT_STR_VALUE2));
 
-        ArrayList<Employee> empList = new ArrayList<>();
-
-        // 임시 Sorting (Treemap 구조로 변경)
-        Map<Integer, Employee> map1 = new TreeMap<>();
-
-        if(map != null) {
-            for (Integer key : map.keySet()) {
-                map1.put(key, map.get(key));
-            }
-        }
-
-        // 임시 Limit 설정
-        int cnt = 0;
-        for (Integer key : map1.keySet()) {
-            empList.add(map1.get(key));
-            cnt++;
-            if(cnt == 5) break;
-        }
-
-        printResult(empList, isPrintOptionEnable(itemList.get(Constants.INPUT_STR_OPTION1_POS)));
-
+        printResult(cnt);
         return true;
     }
 
@@ -65,7 +56,7 @@ public class ModCommand implements ICommand {
 
     @Override
     public void setRepository(IRepository irepo){
-        if(irepo == null) throw new NullPointerException("Error : Repository Link");
+        if(irepo == null) throw new NullPointerException("Error : Repository is Null");
         this.irepo = irepo;
     }
 
@@ -95,15 +86,19 @@ public class ModCommand implements ICommand {
         return inputStrList;
     }
 
-    private Employee empMaker(String empNum, String name, String cl, String phoneNum, String birtday, String certi){
-        return new Employee(empNum, name, cl, phoneNum, birtday, certi);
+    private ArrayList<Employee> transMaptoList(Map<Integer, Employee> map) {
+        ArrayList<Employee> empList = new ArrayList<>();
+        for(Integer key : map.keySet()){
+            empList.add(map.get(key));
+        }
+        return empList;
     }
 
-    private void printResult(ArrayList<Employee> empList, Boolean isEnable) throws IOException {
-        filePrint.print(Constants.COMMAND_MODIFY, empList, isEnable);
+    private void printResult(ArrayList<Employee> empList) throws IOException {
+        filePrint.print(commandName, empList);
     }
 
-    private Boolean isPrintOptionEnable(String inputStr){
-        return Constants.OPTION1_PRINT.equals(inputStr);
+    private void printResult(int cnt) throws IOException {
+        filePrint.print(commandName, cnt);
     }
 }
