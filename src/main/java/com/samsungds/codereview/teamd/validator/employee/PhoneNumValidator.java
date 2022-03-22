@@ -1,22 +1,22 @@
 package com.samsungds.codereview.teamd.validator.employee;
 
-import java.util.regex.Pattern;
-
 import com.samsungds.codereview.teamd.constant.Constants;
-import com.samsungds.codereview.teamd.validator.Validator;
+import com.samsungds.codereview.teamd.validator.CompositeValidator;
+import com.samsungds.codereview.teamd.validator.common.RegExValidator;
+import com.samsungds.codereview.teamd.validator.common.StringLengthValidator;
+import com.samsungds.codereview.teamd.validator.common.StringNotEmptyValidator;
+import com.samsungds.codereview.teamd.validator.common.StringSplitableValidator;
 
-public class PhoneNumValidator implements Validator {
+public class PhoneNumValidator extends CompositeValidator {
 
-	private static final String REGEX_NUMERIC = "^[0-9]{4}$"; 
-	@Override
-	public boolean isValid(String string) {
-		if(string == null || string.trim().length() == 0 || string.trim().length() != 13) return false;
-		String[] split = string.split(Constants.SEPARATOR_PHONENUM);
-		if(split == null || split.length != 3) return false;
-		if("010".equals(split[0]) == false ) return false;
-		if(Pattern.matches(REGEX_NUMERIC, split[1]) == false) return false;
-		if(Pattern.matches(REGEX_NUMERIC, split[2]) == false) return false;
-		return true;
+	private static final String REGEX_PHONENUM = "010-\\d{4}-\\d{4}";
+	private static final int PHONENUM_LENGTH = 13;
+	private static final int PHONENUM_SPLIT_LENGTH = 3;
+
+	public PhoneNumValidator() {
+		addValidator(new StringNotEmptyValidator());
+		addValidator(new StringLengthValidator(PHONENUM_LENGTH));
+		addValidator(new StringSplitableValidator(Constants.SEPARATOR_PHONENUM, PHONENUM_SPLIT_LENGTH));
+		addValidator(new RegExValidator(REGEX_PHONENUM));
 	}
-
 }

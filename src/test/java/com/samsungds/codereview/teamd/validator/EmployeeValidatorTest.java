@@ -25,7 +25,7 @@ public class EmployeeValidatorTest {
 	void nameTest() {
 		EmployeeValidator validator = EmployeeValidator.NAME;
 		assertEquals(true, validator.validate("WONGEUN LEE"));
-		assertThrows(IllegalArgumentException.class, () -> validator.validate("LLLLLLLLL LLLLL"));
+		assertThrows(IllegalArgumentException.class, () -> validator.validate("LLLLLLLLL LLLLLL"));
 		assertThrows(IllegalArgumentException.class, () -> validator.validate("LLLLLLLLL LL LL"));
 		assertThrows(IllegalArgumentException.class, () -> validator.validate("LLLLLLLLLLLLLLL"));
 		assertThrows(IllegalArgumentException.class, () -> validator.validate("LLLLLL LL8"));
