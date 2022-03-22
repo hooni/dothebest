@@ -12,9 +12,10 @@ import com.samsungds.codereview.teamd.repo.IRepository;
 import com.samsungds.codereview.teamd.repo.MemoryRepository;
 
 public class Main {
-
+	private static IRepository repository = null;
 	public static void main(String[] args) throws IOException {
 		argumentValid(args);
+		repository = new MemoryRepository();
 		run(args[0], args[1]);
 	}
 
@@ -39,7 +40,7 @@ public class Main {
 			if (stringNullOrEmpty(line))
 				continue;
 			try {
-				CommandFactory.getCommand(line.split(Constants.SEPARATOR_EMPLOYEE)[0], new MemoryRepository(), print)
+				CommandFactory.getCommand(line.split(Constants.SEPARATOR_EMPLOYEE)[0], repository, print)
 						.execute(line);
 			} catch (IllegalArgumentException ignore) {
 				ignore.printStackTrace();
