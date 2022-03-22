@@ -2,7 +2,7 @@ package com.samsungds.codereview.teamd.command;
 
 import com.samsungds.codereview.teamd.print.Print;
 import com.samsungds.codereview.teamd.repo.IRepository;
-import com.samsungds.codereview.teamd.repo.Repository;
+import com.samsungds.codereview.teamd.repo.MemoryRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -30,7 +30,7 @@ public class AddTest {
     @BeforeEach
     void setUp() throws IOException {
         add = new AddCommand();
-        IRepository irepo = new Repository();
+        IRepository irepo = new MemoryRepository();
         inputStr1 = "ADD, , , ,18050301,KYUMOK KIM,CL2,010-9777-6055,19980906,PRO";
 
         add.setFilePrint(filePrint);
@@ -61,7 +61,7 @@ public class AddTest {
 
     @Test
     void haveSameEmployeeNumTest() {
-        String inputStr2 = "ADD, , , ,18050301,DAVID KIM,CL3,010-1234-5678,19880516,EXP";
+        String inputStr2 = "ADD, , , ,18050301,DAVID KIM,CL3,010-1234-5678,19880516,EX";
 
         assertTrue(add.execute(inputStr1));
         assertFalse(add.execute(inputStr2));

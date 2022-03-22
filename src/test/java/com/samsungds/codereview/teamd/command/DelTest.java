@@ -1,9 +1,8 @@
 package com.samsungds.codereview.teamd.command;
 
-import com.samsungds.codereview.teamd.print.FilePrint;
 import com.samsungds.codereview.teamd.print.Print;
 import com.samsungds.codereview.teamd.repo.IRepository;
-import com.samsungds.codereview.teamd.repo.Repository;
+import com.samsungds.codereview.teamd.repo.MemoryRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -28,7 +27,7 @@ public class DelTest {
 
     @BeforeEach
     void setUp() throws IOException {
-        IRepository irepo = new Repository();
+        IRepository irepo = new MemoryRepository();
         AddCommand add = new AddCommand();
         add.setRepository(irepo);
         add.setFilePrint(filePrint);
