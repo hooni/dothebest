@@ -10,7 +10,7 @@ public class NameValidator implements Validator {
 	private static final String REGEX_UPPERCASE_ALPHABET = "^[A-Z]*$"; 
 	@Override
 	public boolean isValid(String string) {
-		if(string == null || string.trim().length() == 0 || string.trim().length() >= 15) return false;
+		if(string == null || string.trim().length() == 0 || string.trim().length() > 15) return false;
 		String[] split = string.split(Constants.SEPARATOR_NAME);
 		if(split == null || split.length != 2) return false;
 		for(String s : split) {
