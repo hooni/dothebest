@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Map;
 
-public class ModCommand extends BaseCommand {
+public class ModCommand extends SearchBaseCommand {
     private final String commandName;
 
     public ModCommand(){

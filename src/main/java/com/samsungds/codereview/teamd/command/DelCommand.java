@@ -6,7 +6,7 @@ import com.samsungds.codereview.teamd.validator.CommandValidator;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class DelCommand extends BaseCommand {
+public class DelCommand extends SearchBaseCommand {
     private final String commandName;
 
     public DelCommand(){

@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Map;
 
-public class SchCommand extends BaseCommand {
+public class SchCommand extends SearchBaseCommand {
     private final String commandName;
 
     public SchCommand(){

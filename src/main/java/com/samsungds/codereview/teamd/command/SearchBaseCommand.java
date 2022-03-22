@@ -3,7 +3,6 @@ package com.samsungds.codereview.teamd.command;
 import com.samsungds.codereview.teamd.constant.Constants;
 import com.samsungds.codereview.teamd.print.Print;
 import com.samsungds.codereview.teamd.repo.IRepository;
-import com.samsungds.codereview.teamd.validator.CommandValidator;
 import com.samsungds.codereview.teamd.vo.Employee;
 
 import java.io.IOException;
@@ -12,7 +11,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public abstract class BaseCommand implements ICommand{
+public abstract class SearchBaseCommand implements ICommand{
     private IRepository irepo;
     private Print filePrint;
 
