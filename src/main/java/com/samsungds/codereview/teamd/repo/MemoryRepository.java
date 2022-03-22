@@ -41,7 +41,7 @@ public class MemoryRepository implements IRepository {
 
 	@Override
 	public Map<Integer, Employee> search(String key, String value) {
-		return search(key, value, db.size());
+		return search(key, value, 5);
 	}
 
 	@Override
