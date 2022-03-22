@@ -32,6 +32,7 @@ public class Main {
 				try {
 					CommandFactory.getCommand(line.split(Constants.SEPARATOR_EMPLOYEE)[0], repository, print).execute(line);
 				} catch (IllegalArgumentException ignore) {
+					ignore.printStackTrace();
 				}
 			}
 		} catch (Exception exception) {
