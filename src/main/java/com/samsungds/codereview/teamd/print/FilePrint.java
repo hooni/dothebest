@@ -22,19 +22,23 @@ public class FilePrint implements Print {
 		writer = new BufferedWriter(new FileWriter(file));
 	}
 	
-	public void print(String command, Collection<Employee> employees, Boolean printOptionEnable) throws IOException {
+	public void print(String command, Collection<Employee> employees) throws IOException {
 		if(employees.size() == 0) {
 			write(command + Constants.SEPARATOR_EMPLOYEE + Constants.NO_DATA);
 		}
 		else {
-			if(printOptionEnable) {
-				for(Employee employee : employees) {
-					write(command + Constants.SEPARATOR_EMPLOYEE + employee.toInfoString());
-				}
+			for(Employee employee : employees) {
+				write(command + Constants.SEPARATOR_EMPLOYEE + employee.toInfoString());
 			}
-			else {
-				write(command + Constants.SEPARATOR_EMPLOYEE + employees.size());
-			}
+		}
+	}
+	
+	public void print(String command, int count) throws IOException {
+		if(count == 0) {
+			write(command + Constants.SEPARATOR_EMPLOYEE + Constants.NO_DATA);
+		}
+		else {
+			write(command + Constants.SEPARATOR_EMPLOYEE + count);
 		}
 	}
 	
