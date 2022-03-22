@@ -12,7 +12,7 @@ import com.samsungds.codereview.teamd.constant.Constants;
 import com.samsungds.codereview.teamd.print.FilePrint;
 import com.samsungds.codereview.teamd.print.Print;
 import com.samsungds.codereview.teamd.repo.IRepository;
-import com.samsungds.codereview.teamd.repo.Repository;
+import com.samsungds.codereview.teamd.repo.MemoryRepository;
 
 public class CommandFactoryTest {
 
@@ -21,7 +21,7 @@ public class CommandFactoryTest {
 	
 	@BeforeEach
 	void setUp()  {
-		repository = new Repository();
+		repository = new MemoryRepository();
 		try {
 			print = new FilePrint("./output_temp.txt");
 		} catch (IOException e) {
