@@ -57,37 +57,32 @@ public class MemoryRepository implements IRepository {
 
 	@Override
 	public int deleteCnt(String key, String value) {
-		List<Integer> keyList = getDeleteKeys(key, value);
+		Iterator<Integer> empNums = getMatchingKeys(key, value).iterator();
 
-		for(Integer k : keyList) {
+		int size = 0;
+		List<Integer> keyList = new ArrayList<Integer>();
+		while (empNums.hasNext()) {
+			keyList.add(empNums.next());
+			size++;
+		}
+
+		for (Integer k : keyList) {
 			db.remove(k);
 		}
-		
-		return keyList.size();
-	}
 
-	private List<Integer> getDeleteKeys(String key, String value) {
-		Iterator<Integer> empNums = getMatchingKeys(key, value).sorted().iterator();
-		List<Integer> keyList = new ArrayList<Integer>();
-		while(empNums.hasNext()) {
-			keyList.add(empNums.next());
-		}
-		return keyList;
+		return (int) size;
 	}
 
 	@Override
 	public int modifyCnt(String targetKey, String targetValue, String chageKey, String changeValue) {
-		Iterator<Integer> empNums = getMatchingKeys(targetKey, targetValue).iterator();
 
-		int size = 0;
-		while (empNums.hasNext()) {
-			Integer empNum = empNums.next();
+		Integer[] empNums = getMatchingKeys(targetKey, targetValue).toArray(Integer[]::new);;
+		for(Integer empNum : empNums) {
 			Employee employee = db.get(empNum);
 			ExtractEmployee.putEmpValue(employee, chageKey, changeValue);
-			size++;
 		}
 
-		return size;
+		return empNums.length;
 	}
 
 	@Override
@@ -97,14 +92,23 @@ public class MemoryRepository implements IRepository {
 
 	private Map<Integer, Employee> delete(String key, String value, int printOptionCnt) {
 		Map<Integer, Employee> result = new TreeMap<>();
-		List<Integer> keyList = getDeleteKeys(key, value);
+		List<Integer> removeKeys = new ArrayList<>();
 
+		Iterator<Integer> empNums = getMatchingKeys(key, value).sorted().iterator();
+
+		// concurrentmodification ¹®Á¦.
 		int limitCnt = 0;
-		for(Integer empNum : keyList) {
-			Employee employee = db.remove(empNum);
+		while (empNums.hasNext()) {
+			Integer empNum = empNums.next();
+			Employee employee = db.get(empNum);
+			removeKeys.add(empNum);
 			if (printOptionCnt > limitCnt++)
 				result.put(empNum, new Employee(employee.getEmployeeNum(), employee.getName(), employee.getCl(),
 						employee.getPhoneNum(), employee.getBirthday(), employee.getCerti()));
+		}
+
+		for (Integer k : removeKeys) {
+			db.remove(k);
 		}
 
 		return result;
