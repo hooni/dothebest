@@ -96,6 +96,6 @@ public class ModCommand implements ICommand {
     }
 
     private void printResult(int cnt) throws IOException {
-        filePrint.print(Constants.COMMAND_SEARCH, cnt);
+        filePrint.print(Constants.COMMAND_MODIFY, cnt);
     }
 }
