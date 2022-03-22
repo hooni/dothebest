@@ -31,6 +31,10 @@ public class Employee {
 		setPhoneNum(phoneNum);
 		setBirthday(birthday);
 	}
+	
+	public static Employee of(String employeeNum, String name, String cl, String phoneNum, String birthday, String certi) {
+		return new Employee(employeeNum, name, cl, phoneNum, birthday, certi);
+	}
 
 	public String getName() {
 		return name;

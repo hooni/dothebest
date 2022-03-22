@@ -103,7 +103,7 @@ public class MemoryRepository implements IRepository {
 			Employee employee = db.get(empNum);
 			removeKeys.add(empNum);
 			if (printOptionCnt > limitCnt++)
-				result.put(empNum, new Employee(employee.getEmployeeNum(), employee.getName(), employee.getCl(),
+				result.put(empNum, Employee.of(employee.getEmployeeNum(), employee.getName(), employee.getCl(),
 						employee.getPhoneNum(), employee.getBirthday(), employee.getCerti()));
 		}
 
@@ -126,7 +126,7 @@ public class MemoryRepository implements IRepository {
 			Employee employee = db.get(empNum);
 
 			if (printOptionCnt > limitCnt++)
-				result.put(empNum, new Employee(employee.getEmployeeNum(), employee.getName(), employee.getCl(),
+				result.put(empNum, Employee.of(employee.getEmployeeNum(), employee.getName(), employee.getCl(),
 						employee.getPhoneNum(), employee.getBirthday(), employee.getCerti()));
 
 			ExtractEmployee.putEmpValue(employee, chageKey, changeValue);
