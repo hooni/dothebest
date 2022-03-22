@@ -36,7 +36,7 @@ public class AddTest {
         add.setFilePrint(filePrint);
         add.setRepository(irepo);
 
-        Mockito.lenient().doNothing().when(filePrint).print(anyString(), anyCollection(), anyBoolean());
+        Mockito.lenient().doNothing().when(filePrint).print(anyString(), anyCollection());
     }
 
     @Test
@@ -47,12 +47,12 @@ public class AddTest {
     }
 
     @Test
-    void addExecuteTest() throws IOException {
+    void addExecuteTest() {
         assertTrue(add.execute(inputStr1));
     }
 
     @Test
-    void sameInputStringTest() throws IOException {
+    void sameInputStringTest() {
         String inputStr2 = "ADD, , , ,18050301,KYUMOK KIM,CL2,010-9777-6055,19980906,PRO";
 
         assertTrue(add.execute(inputStr1));
@@ -60,7 +60,7 @@ public class AddTest {
     }
 
     @Test
-    void haveSameEmployeeNumTest() throws IOException {
+    void haveSameEmployeeNumTest() {
         String inputStr2 = "ADD, , , ,18050301,DAVID KIM,CL3,010-1234-5678,19880516,EXP";
 
         assertTrue(add.execute(inputStr1));

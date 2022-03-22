@@ -45,7 +45,7 @@ public class ModTest {
         add.execute(addStr3);
         add.execute(addStr4);
 
-        Mockito.lenient().doNothing().when(filePrint).print(anyString(), anyCollection(), anyBoolean());
+        Mockito.lenient().doNothing().when(filePrint).print(anyString(), anyCollection());
     }
 
     @Test
