@@ -2,7 +2,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>ToTheBest</groupId>
 	<artifactId>ToTheBest</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.1-RELEASE</version>
 	<packaging>jar</packaging>
 	<properties>
 		<sonar.organization>hooni</sonar.organization>
