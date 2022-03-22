@@ -32,6 +32,7 @@ public class ModCommand extends SearchBaseCommand {
                     itemList.get(Constants.INPUT_STR_KEY2),
                     itemList.get(Constants.INPUT_STR_VALUE2));
             printResult(commandName, transMaptoList(map));
+            return;
         }
 
         printResult(commandName, getRepository().modifyCnt(checkSearchKey(itemList.get(Constants.INPUT_STR_OPTION2_POS),
