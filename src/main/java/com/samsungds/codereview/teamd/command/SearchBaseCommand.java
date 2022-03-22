@@ -29,29 +29,11 @@ public abstract class SearchBaseCommand implements ICommand{
     }
 
     protected String checkSearchKey(String strOpt, String key){
-        switch (strOpt){
-            case Constants.OPTION2_NAME_FIRST:
-                return Constants.OPTION2_NAME_FIRST_FIELDNAME;
-            case Constants.OPTION2_NAME_LAST:
-                return key.equals(Constants.EMPLOYEE_NAME) ? Constants.OPTION2_NAME_LAST_FIELDNAME
-                        : Constants.OPTION2_PHONENUM_LAST_FIELDNAME;
-            case Constants.OPTION2_PHONENUM_MID:
-                return key.equals(Constants.EMPLOYEE_PHONENUM) ? Constants.OPTION2_PHONENUM_MID_FIELDNAME
-                        : Constants.OPTION2_BIRTHDAY_MONTH_FIELDNAME;
-            case Constants.OPTION2_BIRTHDAY_YEAR:
-                return Constants.OPTION2_BIRTHDAY_YEAR_FIELDNAME;
-            case Constants.OPTION2_BIRTHDAY_DAY:
-                return Constants.OPTION2_BIRTHDAY_DAY_FIELDNAME;
-            default:
-                break;
-        }
-        return key;
+        return EnumOption2.valueOf(key).getSearchKey(strOpt);
     }
 
     protected ArrayList<String> inputStringToArrayList(String inputStr){
-        ArrayList<String> inputStrList;
-        inputStrList = Stream.of(inputStr.split(Constants.SEPARATOR_EMPLOYEE)).collect(Collectors.toCollection(ArrayList<String>::new));
-        return inputStrList;
+        return Stream.of(inputStr.split(Constants.SEPARATOR_EMPLOYEE)).collect(Collectors.toCollection(ArrayList<String>::new));
     }
 
     protected ArrayList<Employee> transMaptoList(Map<Integer, Employee> map) {
@@ -73,4 +55,5 @@ public abstract class SearchBaseCommand implements ICommand{
     protected IRepository getRepository(){
         return this.irepo;
     }
+    protected abstract void printSelect(ArrayList<String> itemList) throws IOException;
 }

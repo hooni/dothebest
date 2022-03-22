@@ -16,23 +16,22 @@ public class DelCommand extends SearchBaseCommand {
     @Override
     public Boolean execute(String inputStr) throws IOException {
         if(getRepository() == null) throw new NullPointerException("Error : Repository Link");
-
         CommandValidator.DEL.validate(inputStr);
-
         ArrayList<String> itemList = inputStringToArrayList(inputStr);
-
-        if(itemList.get(Constants.INPUT_STR_OPTION1_POS).equals(Constants.OPTION1_PRINT)){
-            printResult(commandName, transMaptoList(getRepository().delete(checkSearchKey(
-                                    itemList.get(Constants.INPUT_STR_OPTION2_POS),
-                                    itemList.get(Constants.INPUT_STR_KEY1)),
-                            itemList.get(Constants.INPUT_STR_VALUE1))));
-        }
-        else {
-            printResult(commandName, getRepository().deleteCnt(checkSearchKey(
-                            itemList.get(Constants.INPUT_STR_OPTION2_POS), itemList.get(Constants.INPUT_STR_KEY1)),
-                    itemList.get(Constants.INPUT_STR_VALUE1)));
-        }
-
+        printSelect(itemList);
         return true;
+    }
+
+    @Override
+    protected void printSelect(ArrayList<String> itemList) throws IOException {
+        if (itemList.get(Constants.INPUT_STR_OPTION1_POS).equals(Constants.OPTION1_PRINT)) {
+            printResult(commandName, transMaptoList(getRepository().delete(
+                    checkSearchKey(itemList.get(Constants.INPUT_STR_OPTION2_POS),itemList.get(Constants.INPUT_STR_KEY1)),
+                    itemList.get(Constants.INPUT_STR_VALUE1))));
+            return;
+        }
+        printResult(commandName, getRepository().deleteCnt(
+                checkSearchKey(itemList.get(Constants.INPUT_STR_OPTION2_POS), itemList.get(Constants.INPUT_STR_KEY1)),
+                itemList.get(Constants.INPUT_STR_VALUE1)));
     }
 }
