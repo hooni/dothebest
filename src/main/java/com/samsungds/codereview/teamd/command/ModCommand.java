@@ -3,6 +3,7 @@ package com.samsungds.codereview.teamd.command;
 import com.samsungds.codereview.teamd.constant.Constants;
 import com.samsungds.codereview.teamd.print.Print;
 import com.samsungds.codereview.teamd.repo.IRepository;
+import com.samsungds.codereview.teamd.validator.CommandValidator;
 import com.samsungds.codereview.teamd.vo.Employee;
 
 import java.io.IOException;
@@ -14,19 +15,21 @@ import java.util.stream.Stream;
 public class ModCommand implements ICommand {
     private IRepository irepo;
     private Print filePrint;
+    private final String commandName;
+    private final CommandValidator validator;
+
+    public ModCommand(){
+        this.commandName = Constants.COMMAND_MODIFY;
+        validator = CommandValidator.getValidator(commandName);
+    }
 
     @Override
     public Boolean execute(String inputStr) throws IOException {
         if(irepo == null) throw new NullPointerException("Error : Repository Link");
+
+        validator.validate(inputStr);
+
         ArrayList<String> itemList = inputStringToArrayList(inputStr);
-
-        if(!(itemList.get(Constants.INPUT_STR_COMMAND_POS).equals(Constants.COMMAND_MODIFY)))
-            throw new IllegalArgumentException("Error : Command");
-
-        if(itemList.size() != 8) throw new IllegalArgumentException("Error : Argument Count");
-
-        if(itemList.get(Constants.INPUT_STR_KEY2).equals(Constants.EMPLOYEE_NUM))
-            throw new IllegalArgumentException("Error : Can't Modify Employee Number");
 
         if(itemList.get(Constants.INPUT_STR_OPTION1_POS).equals(Constants.OPTION1_PRINT)) {
             Map<Integer, Employee> map = irepo.modify(checkSearchKey(itemList.get(Constants.INPUT_STR_OPTION2_POS),
@@ -53,7 +56,7 @@ public class ModCommand implements ICommand {
 
     @Override
     public void setRepository(IRepository irepo){
-        if(irepo == null) throw new NullPointerException("Error : Repository Link");
+        if(irepo == null) throw new NullPointerException("Error : Repository is Null");
         this.irepo = irepo;
     }
 
@@ -92,10 +95,10 @@ public class ModCommand implements ICommand {
     }
 
     private void printResult(ArrayList<Employee> empList) throws IOException {
-        filePrint.print(Constants.COMMAND_MODIFY, empList);
+        filePrint.print(commandName, empList);
     }
 
     private void printResult(int cnt) throws IOException {
-        filePrint.print(Constants.COMMAND_MODIFY, cnt);
+        filePrint.print(commandName, cnt);
     }
 }

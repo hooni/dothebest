@@ -3,6 +3,7 @@ package com.samsungds.codereview.teamd.command;
 import com.samsungds.codereview.teamd.constant.Constants;
 import com.samsungds.codereview.teamd.print.Print;
 import com.samsungds.codereview.teamd.repo.IRepository;
+import com.samsungds.codereview.teamd.validator.CommandValidator;
 import com.samsungds.codereview.teamd.vo.Employee;
 
 import java.io.IOException;
@@ -14,17 +15,21 @@ import java.util.stream.Stream;
 public class DelCommand implements ICommand{
     private IRepository irepo;
     private Print filePrint;
+    private final String commandName;
+    private final CommandValidator validator;
+
+    public DelCommand(){
+        this.commandName = Constants.COMMAND_DEL;
+        validator = CommandValidator.getValidator(commandName);
+    }
 
     @Override
     public Boolean execute(String inputStr) throws IOException {
         if(irepo == null) throw new NullPointerException("Error : Repository Link");
 
+        validator.validate(inputStr);
+
         ArrayList<String> itemList = inputStringToArrayList(inputStr);
-
-        if(!(itemList.get(Constants.INPUT_STR_COMMAND_POS).equals(Constants.COMMAND_DEL)))
-            throw new IllegalArgumentException();
-
-        if(itemList.size() != 6) throw new IllegalArgumentException("Error : Argument Count");
 
         if(itemList.get(Constants.INPUT_STR_OPTION1_POS).equals(Constants.OPTION1_PRINT)){
             Map<Integer, Employee> map = irepo.delete(checkSearchKey(itemList.get(Constants.INPUT_STR_OPTION2_POS),
@@ -40,8 +45,6 @@ public class DelCommand implements ICommand{
         return true;
     }
 
-
-
     @Override
     public void setFilePrint(Print filePrint){
         this.filePrint = filePrint;
@@ -49,7 +52,7 @@ public class DelCommand implements ICommand{
 
     @Override
     public void setRepository(IRepository irepo){
-        if(irepo == null) throw new NullPointerException("Error : Repository Link");
+        if(irepo == null) throw new NullPointerException("Error : Repository is Null");
         this.irepo = irepo;
     }
 
@@ -88,10 +91,10 @@ public class DelCommand implements ICommand{
     }
 
     private void printResult(ArrayList<Employee> empList) throws IOException {
-        filePrint.print(Constants.COMMAND_DEL, empList);
+        filePrint.print(commandName, empList);
     }
 
     private void printResult(int cnt) throws IOException {
-        filePrint.print(Constants.COMMAND_DEL, cnt);
+        filePrint.print(commandName, cnt);
     }
 }
