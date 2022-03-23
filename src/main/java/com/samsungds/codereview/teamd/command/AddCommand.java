@@ -20,7 +20,7 @@ public class AddCommand implements ICommand {
 
         ArrayList<String> itemList = inputStringToArrayList(inputStr);
 
-        Employee emp = empMaker(itemList.get(Constants.INPUT_STR_EMP_NUM_POS),
+        Employee emp = Employee.of(itemList.get(Constants.INPUT_STR_EMP_NUM_POS),
                 itemList.get(Constants.INPUT_STR_EMP_NAME_POS),
                 itemList.get(Constants.INPUT_STR_EMP_CAREER_LEVEL_POS),
                 itemList.get(Constants.INPUT_STR_EMP_PHONENUM_POS),
@@ -44,9 +44,5 @@ public class AddCommand implements ICommand {
         inputStrList = Stream.of(inputStr.split(Constants.SEPARATOR_EMPLOYEE))
                 .collect(Collectors.toCollection(ArrayList<String>::new));
         return inputStrList;
-    }
-
-    private Employee empMaker(String empNum, String name, String cl, String phoneNum, String birtday, String certi) {
-        return new Employee(empNum, name, cl, phoneNum, birtday, certi);
     }
 }

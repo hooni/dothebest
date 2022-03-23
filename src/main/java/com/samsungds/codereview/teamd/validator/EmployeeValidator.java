@@ -8,7 +8,7 @@ import com.samsungds.codereview.teamd.validator.employee.EmployeeNumValidator;
 import com.samsungds.codereview.teamd.validator.employee.NameValidator;
 import com.samsungds.codereview.teamd.validator.employee.PhoneNumValidator;
 
-public class EmployeeValidator {
+public class EmployeeValidator implements Validator {
 
 	public static final EmployeeValidator EMPLOYEENUM = new EmployeeValidator(Constants.EMPLOYEE_NUM, new EmployeeNumValidator());
 	public static final EmployeeValidator NAME = new EmployeeValidator(Constants.EMPLOYEE_NAME, new NameValidator());
@@ -43,5 +43,10 @@ public class EmployeeValidator {
 			case Constants.EMPLOYEE_CERTI: return CERTI;
 			default : throw new IllegalArgumentException(column);
 		}
+	}
+
+	@Override
+	public boolean isValid(String string) {
+		return validate(string);
 	}
 }
