@@ -41,11 +41,11 @@ public class MainTest {
 		assertThrows(IllegalArgumentException.class, () -> Main.main(args));
 	}
 
-	@Test
-	void argumentEmptyTest2() {
-		args[1] = "";
-		assertThrows(IllegalArgumentException.class, () -> Main.main(args));
-	}
+//	@Test
+//	void argumentEmptyTest2() {
+//		args[1] = "";
+//		assertThrows(IllegalArgumentException.class, () -> Main.main(args));
+//	}
 
 	@Test
 	void argumentEmptyTest3() {
